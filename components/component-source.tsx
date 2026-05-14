@@ -1,10 +1,14 @@
 import { CodeCollapsibleWrapper } from "@/components/code-collapsible-wrapper";
+import { CopyButton } from "@/components/copy-button";
+import { getIconForLanguageExtension } from "@/components/icons";
+import { formatCode } from "@/lib/format-code";
 import { highlightCode } from "@/lib/highlight-code";
-import { readFileFromRoot } from "@/lib/read-file";
+import {
+  getDemoSource,
+  getRegistrySource,
+  readOptionalFromRoot,
+} from "@/lib/registry";
 import { cn } from "@/lib/utils";
-
-import { CopyButton } from "./copy-button";
-import { getIconForLanguageExtension } from "./icons";
 
 const ComponentCode = ({
   code,
@@ -50,30 +54,19 @@ export const ComponentSource = async ({
 }) => {
   let code: string | null = null;
 
-  if (src) {
-    code = await readFileFromRoot(src);
-  } else if (name) {
-    const guessedPaths = [
-      `registry/new-york/${name}.tsx`,
-      `components/${name}.tsx`,
-      `components/ui/${name}.tsx`,
-    ];
+  if (name) {
+    code = (await getDemoSource(name)) ?? (await getRegistrySource(name));
+  }
 
-    for (const guessedPath of guessedPaths) {
-      try {
-        code = await readFileFromRoot(guessedPath);
-        if (code) {
-          break;
-        }
-      } catch {
-        // Try next path.
-      }
-    }
+  if (src) {
+    code = await readOptionalFromRoot(src);
   }
 
   if (!code) {
     return null;
   }
+
+  code = await formatCode(code);
 
   const lang = language ?? title?.split(".").pop() ?? "tsx";
   const highlightedCode = await highlightCode(code, lang);

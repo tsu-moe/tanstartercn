@@ -1,14 +1,13 @@
 import { unstable_cache } from "next/cache";
 
+import { GitHubStars } from "@/components/github-stars";
 import { GITHUB } from "@/constants/links";
-
-import { GitHubStars } from "./github-stars";
 
 const getStargazerCount = unstable_cache(
   async () => {
     try {
       const response = await fetch(
-        `https://api.github.com/repos/${GITHUB.user}/${GITHUB.repo}`,
+        `https://api.github.com/repos/${GITHUB.org}/${GITHUB.repo}`,
         {
           headers: {
             Accept: "application/vnd.github+json",

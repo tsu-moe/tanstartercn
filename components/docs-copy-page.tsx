@@ -3,6 +3,7 @@
 import { ChevronDownIcon } from "lucide-react";
 import { useCallback } from "react";
 
+import { CopyButton } from "@/components/copy-button";
 import {
   ChatGptIcon,
   ClaudeIcon,
@@ -28,12 +29,11 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
-
-import { CopyButton } from "./copy-button";
+import { SITE } from "@/constants/site";
 
 const getPromptUrl = (baseURL: string, url: string, param = "q") =>
   `${baseURL}?${param}=${encodeURIComponent(
-    `I'm looking at this startercn documentation: ${url}.
+    `I'm looking at this ${SITE.NAME} documentation: ${url}.
 Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.
 `
   )}`;

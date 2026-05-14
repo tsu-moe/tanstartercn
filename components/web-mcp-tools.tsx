@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 
 import { ROUTES } from "@/constants/routes";
+import { SITE } from "@/constants/site";
 
 type ToolExecute = (
   input: unknown,
@@ -60,8 +61,7 @@ export const WebMcpTools = () => {
     };
 
     register({
-      description:
-        "Navigate this tab to a startercn documentation path (e.g. /docs/installation).",
+      description: `Navigate this tab to a ${SITE.NAME} documentation path (e.g. /docs/installation).`,
       execute: (input) => {
         const path = getPath(input, ROUTES.DOCS);
         window.location.assign(path);
@@ -77,7 +77,7 @@ export const WebMcpTools = () => {
         },
         type: "object",
       },
-      name: "startercn_open_docs",
+      name: `${SITE.NAME}_open_docs`,
     });
 
     register({
@@ -94,7 +94,7 @@ export const WebMcpTools = () => {
         return res.json();
       },
       inputSchema: { properties: {}, type: "object" },
-      name: "startercn_fetch_registry",
+      name: `${SITE.NAME}_fetch_registry`,
     });
 
     register({
@@ -105,7 +105,7 @@ export const WebMcpTools = () => {
         return Promise.resolve({ ok: true, path: ROUTES.LLMS });
       },
       inputSchema: { properties: {}, type: "object" },
-      name: "startercn_open_llms_index",
+      name: `${SITE.NAME}_open_llms_index`,
     });
 
     return () => {
