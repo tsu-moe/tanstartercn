@@ -64,7 +64,6 @@ const useActiveItem = (itemIds: string[]) => {
 
 export const DocsTableOfContents = ({
   toc,
-  docId,
   variant = "list",
   className,
 }: {
@@ -73,7 +72,6 @@ export const DocsTableOfContents = ({
     url: string;
     depth: number;
   }[];
-  docId: string;
   variant?: "dropdown" | "list";
   className?: string;
 }) => {
@@ -140,44 +138,6 @@ export const DocsTableOfContents = ({
           {item.title}
         </a>
       ))}
-      <Separator orientation="horizontal" className="my-2" />
-      <div className="flex flex-col gap-2">
-        {docId && (
-          <a
-            href={`${LINK.GITHUB}/edit/${GITHUB.branch}/${DOCS_DIR}/${docId}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="transition-colors text-[0.8rem] hover:text-foreground text-muted-foreground [&_svg]:size-3 flex gap-1.5 items-center"
-            onClick={() =>
-              trackEvent({
-                name: "click_edit_page",
-                properties: { doc: docId },
-              })
-            }
-          >
-            <SquarePenIcon />
-            Edit this page
-          </a>
-        )}
-        <a
-          href={LINK.X_SHADCN_LABS}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors text-[0.8rem] hover:text-foreground text-muted-foreground [&_svg]:size-3 flex gap-1.5 items-center"
-        >
-          <XIcon />
-          Follow @shadcnlabs
-        </a>
-        <a
-          href={LINK.DISCORD}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-colors text-[0.8rem] hover:text-foreground text-muted-foreground [&_svg]:size-3 flex gap-1.5 items-center"
-        >
-          <DiscordIcon />
-          Join community
-        </a>
-      </div>
     </div>
   );
 };
