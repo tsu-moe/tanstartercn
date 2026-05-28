@@ -18,4 +18,5 @@ export const ROUTES = {
   ROBOTS: "/robots.txt",
   RSS: "/rss.xml",
   SITEMAP: "/sitemap.xml",
+  SPONSOR: "/sponsor",
 } as const;
