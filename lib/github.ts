@@ -37,7 +37,7 @@ export const getStargazers = unstable_cache(
         if (data.length < 100) {
           break;
         }
-        page++;
+        page += 1;
       }
 
       return pages.filter((s) => s.login !== GITHUB.user);
