@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://tanstartercn.tsu.moe/web-app-manifest-512x512.png" alt="tanstartercn" />
+  <img src="https://tanstartercn.tsu.moe/marketing-og-image.png" alt="tanstartercn" />
 </p>
 
 <h1 align="center">tanstartercn</h1>
