@@ -1,88 +1,138 @@
 <p align="center">
-  <img src="https://startercn.vercel.app/og" alt="startercn banner" />
+  <img src="https://tanstartercn.tsu.moe/web-app-manifest-512x512.png" alt="tanstartercn" />
 </p>
 
-<h1 align="center">startercn</h1>
+<h1 align="center">tanstartercn</h1>
 
 <p align="center">
-  A template for building and publishing your own custom shadcn registry components. Includes documentation, landing page, and everything you need to deploy your component registry.
+  A highly customizable shadcn registry template repository built with TanStack Start.  Fork, customize, and deploy free to Cloudflare Workers.
   <br />
   <br />
-  <a href="https://github.com/shadcn-labs/startercn"><img src="https://www.shieldcn.dev/github/stars/shadcn-labs/startercn.svg?variant=secondary&size=xs&theme=zinc" alt="GitHub Stars" /></a>
-  <a href="https://github.com/shadcn-labs/startercn/actions"><img src="https://www.shieldcn.dev/github/ci/shadcn-labs/startercn.svg?variant=secondary&size=xs&theme=zinc" alt="CI" /></a>
-  <a href="https://discord.com/invite/N6G36KhYK4"><img src="https://www.shieldcn.dev/discord/online-members/N6G36KhYK4.svg?variant=secondary&size=xs&theme=zinc" alt="Discord Members" /></a>
-  <a href="https://x.com/shadcnlabs"><img src="https://www.shieldcn.dev/x/follow/shadcnlabs.svg?variant=branded&size=xs&theme=zinc" alt="X Follow" /></a>
+  <a href="https://tanstartercn.tsu.moe">Documentation</a>
+  ·
+  <a href="https://tanstartercn.tsu.moe/r/registry.json">Registry</a>
+  ·
+  <a href="https://tanstartercn.tsu.moe/llms.txt">LLMS.txt</a>
 </p>
 
 ## Features
 
-- 📦 **Ready-to-use template** - Fork and start building immediately
-- 📚 **Documentation site** - Beautiful docs powered by Fumadocs
-- 🎨 **Shadcn registry compatible** - Works with `npx shadcn add`
-- 🤖 **[Agent ready](https://www.mintlify.com/score/startercn)** - Includes `llms.txt`, `llms-full.txt`, agent skills discovery routes, and API catalog endpoints
-- 🔊 **[Web audio feedback](https://audio.raphaelsalaja.com/)** - Built-in sound effects powered by `@web-kits/audio`
-- 📳 **[Web haptics](https://haptics.lochie.me/)** - Optional haptic feedback hooks for supported devices via `web-haptics`
-- ✨ **[Motion animations](https://motion.dev/)** - `motion`-powered UI polish for copy states, text transitions, and interactive elements
-- 🎯 **[Animated icons](https://lucide-animated.com/)** - Reusable animated icons for navigation, sharing, sponsorship, and CTAs
-- 🔄 **[View transitions](https://nextjs.org/docs/app/api-reference/config/next-config-js/viewTransition)** - Next.js view transitions enabled for smoother navigation between pages
-- 🚀 **Deploy ready** - Deploy anywhere
+- **Registry compatible** - Components install with `npx shadcn@latest add <url>`.
+- **Fumadocs documentation** - MDX docs in `content/docs`.
+- **Component previews** - Live examples from `examples` or inline MDX.
+- **Static AI docs** - Generated `llms.txt`, `llms-full.txt`, markdown mirrors, OpenAPI, and agent discovery files.
+- **Cloudflare Workers deploy** - Static-hostable SPA with Worker Static Assets.
 
 ## Built In
 
-- `Next.js 16` with the App Router
+- `TanStack Start` with file routes and static prerendering
 - `React 19` and `TypeScript`
 - `Tailwind CSS 4`
 - `Fumadocs` for documentation
 - `shiki` + `rehype-pretty-code` for code blocks
 - `sonner` for toasts
 - `radix-ui` + `vaul` for accessible primitives
-- `@vercel/analytics` for analytics
 
-## Quick Start
+## Development Setup
 
-1. **Use this template** - Click "Use this template" on GitHub
-
-2. **Install dependencies**:
+Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-3. **Replace the placeholder component** at `registry/new-york/your-component.tsx`
-
-4. **Update `registry.json`** with your component details
-
-5. **Build the registry**:
-
-```bash
-pnpm registry:build
-```
-
-6. **Start development**:
+Start the development server:
 
 ```bash
 pnpm dev
 ```
 
-7. **Deploy** and share your component!
+Build generated registry files:
+
+```bash
+pnpm registry:build
+```
+
+Build generated docs, LLM files, sitemap, OpenAPI, and discovery files:
+
+```bash
+pnpm static:build
+```
+
+Run checks:
+
+```bash
+pnpm typecheck
+pnpm check
+```
+
+Build and deploy:
+
+```bash
+pnpm build
+pnpm deploy
+```
+
+## Adding Registry Components
+
+Put installable component source under the default style folder:
+
+```txt
+src/registry/luma/my-component.tsx
+```
+
+Use shadcn-compatible imports in registry source. Installed code should import from paths that exist in a user's app, such as `@/lib/utils` and `@/components/ui/button`.
+
+Add the item to `registry.json`:
+
+```json
+{
+  "name": "my-component",
+  "type": "registry:ui",
+  "title": "My Component",
+  "description": "A concise description of what it provides.",
+  "files": [
+    {
+      "path": "src/registry/luma/my-component.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/my-component.tsx"
+    }
+  ]
+}
+```
+
+Then add a docs page under `content/docs/components/my-component.mdx` and wire any preview component in `src/shared/lib/registry.ts`.
+
+Do not edit generated output by hand:
+
+- `src/routeTree.gen.ts`
+- `public/r/*`
+- `.source/*`
+- `.tanstack/*`
+
+Regenerate generated files with the matching script instead.
 
 ## Usage
 
-Once deployed, users can install your component with:
+Users install published registry components with the shadcn CLI:
 
 ```bash
-npx shadcn@latest add https://your-domain.com/r/your-component.json
+npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 ```
 
 ## Project Structure
 
 ```
-├── registry/
-│   └── new-york/           # Your components go here
-│       └── your-component.tsx
+├── src/
+│   ├── registry/
+│   │   └── luma/           # Registry component source
+│   │       └── button.tsx
+│   ├── routes/             # TanStack Start routes
+│   ├── shared/             # Shared components, hooks, lib, constants, SEO
+│   └── styles/             # Global CSS and themes
+├── examples/               # Reusable component previews
 ├── registry.json           # Component registry manifest
 ├── content/docs/           # Documentation (MDX)
-├── app/                    # Next.js app
 └── public/r/               # Built registry files (auto-generated)
 ```
 
@@ -91,6 +141,15 @@ npx shadcn@latest add https://your-domain.com/r/your-component.json
 - `pnpm dev` - Start development server
 - `pnpm build` - Build for production
 - `pnpm registry:build` - Rebuild the component registry
+- `pnpm static:build` - Generate static endpoint files
+
+## Acknowledgements
+
+This project was originally forked from [shadcn-labs/startercn](https://github.com/shadcn-labs/startercn) and refactored into TanStack Start together with my own preferences.
+
+- I urge you to support the original project and use it if you prefer a Vercel or Next.js approach to deploying this repository.
+
+I'd also like to spend some time appreciating the amazing work being done at [fumadocs](https://github.com/fuma-nama/fumadocs); the cleanest React documentation framework in the ecosystem today and their constant innovation in the documentation space.
 
 ## License
 

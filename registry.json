@@ -1,6 +1,6 @@
 {
-  "name": "shadcn/registry-kit",
-  "homepage": "https://shadcn-registry-kit.vercel.app",
+  "name": "tanstartercn",
+  "homepage": "https://tanstartercn.tsu.moe",
   "items": [
     {
       "name": "your-component",
@@ -9,9 +9,23 @@
       "description": "A placeholder component. Replace this with your custom shadcn component.",
       "files": [
         {
-          "path": "registry/new-york/your-component.tsx",
+          "path": "src/registry/luma/your-component.tsx",
           "type": "registry:ui",
           "target": "components/ui/your-component.tsx"
+        }
+      ]
+    },
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A Luma-styled button component with variants and sizes.",
+      "dependencies": ["radix-ui"],
+      "files": [
+        {
+          "path": "src/registry/luma/button.tsx",
+          "type": "registry:ui",
+          "target": "components/ui/button.tsx"
         }
       ]
     }

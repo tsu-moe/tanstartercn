@@ -1,0 +1,214 @@
+---
+title: Extending
+description: How to add docs pages, registry components, previews, and clear examples.
+---
+
+This project has two extension paths: documentation pages in `content/docs` and installable shadcn registry items in `src/registry`. Most changes should keep those paths connected so readers can see the component, copy the usage, and install the same source from `/r/<name>.json`.
+
+## Add a docs page
+
+Create MDX under `content/docs`. Put general guides in `content/docs/(root)` and component reference pages in `content/docs/components`.
+
+```txt
+content/docs/(root)/my-guide.mdx
+content/docs/components/my-component.mdx
+```
+
+Every page should start with frontmatter:
+
+```mdx
+---
+title: My Guide
+description: A direct sentence that explains what the page helps with.
+---
+```
+
+Pages are discovered automatically from the filesystem. The file name creates the route, and the frontmatter creates the label.
+
+```txt
+content/docs/(root)/extending.mdx -> /docs/extending
+content/docs/components/button.mdx -> /docs/components/button
+```
+
+Use `meta.json` only as an optional override for folder metadata or custom ordering. If a folder has no `meta.json`, the docs tree still includes every MDX file in that folder. Use short headings, small examples, and task-focused sections. A good page answers what to edit, where to put it, how to wire it, and how to verify it.
+
+## Add a registry component
+
+Put installable source under the style folder. The default style is `luma`.
+
+```txt
+src/registry/luma/my-component.tsx
+```
+
+Use shadcn-compatible imports in registry source. The installed code should import from paths that exist in a user's app, such as `@/lib/utils` and `@/components/ui/button`. If you need an upstream shadcn/ui primitive first, add it with:
+
+```bash
+pnpm exec shadcn add <component>
+```
+
+Add the component to `registry.json`:
+
+```json
+{
+  "name": "my-component",
+  "type": "registry:ui",
+  "title": "My Component",
+  "description": "A concise description of what it provides.",
+  "dependencies": ["radix-ui"],
+  "files": [
+    {
+      "path": "src/registry/luma/my-component.tsx",
+      "type": "registry:ui",
+      "target": "components/ui/my-component.tsx"
+    }
+  ]
+}
+```
+
+Use `dependencies` for npm packages the installed component needs. Use the file `target` for the path users should receive in their app.
+
+Then wire the preview in `src/shared/lib/registry.ts`:
+
+```tsx
+import { MyComponent } from "@/registry/luma/my-component";
+
+const registryComponents: RegistryComponentMap = {
+  luma: {
+    "my-component": MyComponent as RegistryComponent,
+  },
+};
+```
+
+Do not edit `public/r/*` by hand. Run `pnpm registry:build` after registry changes.
+
+## Write component docs
+
+Component docs should show the preview first, then installation, usage, and meaningful variants.
+
+````mdx
+---
+title: My Component
+description: A concise description of what the component does.
+---
+
+<ComponentPreview name="my-component-demo" />
+
+## Installation
+
+```bash
+npx shadcn@latest add https://your-site.com/r/my-component.json
+```
+
+## Usage
+
+```tsx
+import { MyComponent } from "@/components/ui/my-component";
+```
+
+```tsx
+<MyComponent />
+```
+
+## Examples
+
+<ComponentPreview name="my-component-with-icon" />
+````
+
+Pages are discovered automatically from the filesystem. Prefer real use cases over prop inventories. Good examples are named after the situation they demonstrate, such as "With icon", "Loading", "Form field", or "Empty state".
+
+## Preview from an examples file
+
+Use an `examples` file when the same demo is reused or when the example is large enough to deserve its own module.
+
+```txt
+examples/my-component-demo.tsx
+```
+
+```tsx
+import { MyComponent } from "@/registry/luma/my-component";
+
+export default function MyComponentDemo() {
+  return <MyComponent>Save changes</MyComponent>;
+}
+```
+
+Then reference it from MDX:
+
+```mdx
+<ComponentPreview name="my-component-demo" />
+```
+
+The examples directory is loaded dynamically, so keep file names stable and use kebab-case names that match the preview name.
+
+If the demo is reused by multiple pages, import it in `src/shared/lib/registry.ts` and add it to `demoComponents`.
+
+## Preview inline
+
+Use inline previews when the example only belongs to one docs page.
+
+````mdx
+import { Button } from "@/registry/luma/button";
+
+<ComponentPreview name="inline-button-example" title="inline-button-example.tsx">
+  <Button variant="outline">Inline example</Button>
+
+```tsx
+import { Button } from "@/components/ui/button";
+
+export function InlineButtonExample() {
+  return <Button variant="outline">Inline example</Button>;
+}
+```
+
+</ComponentPreview>
+````
+
+The JSX child renders the live preview. The fenced `tsx` block becomes the source panel users copy from.
+
+## Show source directly
+
+Use `ComponentSource` when the page needs to show the registry file itself.
+
+```mdx
+<ComponentSource
+  src="src/registry/luma/button.tsx"
+  title="components/ui/button.tsx"
+/>
+```
+
+Use a `title` that matches the installed target path when possible.
+
+## Smoke-test registry output
+
+For a public registry, smoke-test generated files with the shadcn CLI:
+
+```bash
+npx shadcn@latest add https://your-site.com/r/my-component.json --dry-run
+```
+
+Before deploy, confirm `/r/registry.json`, `/r/my-component.json`, the docs page, and `/llms-full.txt` resolve from the built app.
+
+## Documentation checklist
+
+Before finishing, check that the page has:
+
+- A specific title and description.
+- A working primary preview near the top.
+- Installation and usage snippets that match the registry target.
+- Examples that teach real decisions, not every possible prop.
+- Links or notes for dependencies when the user must install something extra.
+- A verification section only when it helps the reader complete the task.
+
+## Verification
+
+Run the checks that match the change:
+
+```bash
+pnpm registry:build
+pnpm static:build
+pnpm typecheck
+pnpm check
+pnpm build
+```
+
+Use `pnpm registry:build` for registry changes and `pnpm static:build` for docs changes. `pnpm build` runs both and verifies the deployable app.

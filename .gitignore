@@ -13,12 +13,9 @@
 # testing
 /coverage
 
-# next.js
-/.next/
-/out/
-
 # production
 /build
+dist
 
 # misc
 .DS_Store
@@ -29,6 +26,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
 
 # env files (can opt-in for committing if needed)
 .env*
@@ -40,8 +38,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-
 # generated content
 .contentlayer
 .content-collections
 .source
+.tanstack
+.wrangler
+.codex-remote-attachments

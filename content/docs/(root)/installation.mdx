@@ -1,103 +1,55 @@
 ---
 title: Installation
-description: How to use this template to build your own shadcn component.
+description: Install registry components in your project.
 ---
 
-## Building Your Component
+## Prerequisites
 
-### 1. Fork the Template
+Components are distributed through the [shadcn registry](https://ui.shadcn.com/docs/registry) format. Before installing a component, make sure your project has:
 
-Click "Use this template" on [GitHub](https://github.com/mehmetpekcan/shadcn-registry-kit).
+- React
+- Tailwind CSS v4
+- shadcn/ui initialized
+- a `components` alias that resolves to your app's component directory
 
-### 2. Install Dependencies
+For a new project, initialize shadcn first:
 
 ```bash
-pnpm install
+npx shadcn@latest init
 ```
 
-### 3. Create Your Component
+## Adding components
 
-Replace the placeholder at `registry/new-york/your-component.tsx`:
+### CLI
+
+Install the Button component from this registry:
+
+```bash
+npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
+```
+
+The CLI copies the component source into your project and installs the npm dependencies declared by the registry item.
+
+Then import it from the target path:
 
 ```tsx
-import { forwardRef, HTMLAttributes } from "react";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
-export interface MyButtonProps extends HTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline";
-}
-
-const MyButton = forwardRef<HTMLButtonElement, MyButtonProps>(
-  ({ className, variant = "default", ...props }, ref) => {
-    return (
-      <button
-        ref={ref}
-        className={cn(
-          "rounded-md px-4 py-2 font-medium",
-          variant === "default" && "bg-primary text-primary-foreground",
-          variant === "outline" && "border border-input",
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-
-MyButton.displayName = "MyButton";
-
-export { MyButton };
-```
-
-### 4. Update registry.json
-
-```json
-{
-  "name": "your-name/your-registry",
-  "homepage": "https://your-site.com",
-  "items": [
-    {
-      "name": "my-button",
-      "type": "registry:ui",
-      "title": "My Button",
-      "description": "A custom button component.",
-      "files": [
-        {
-          "path": "registry/new-york/my-button.tsx",
-          "type": "registry:ui",
-          "target": "components/ui/my-button.tsx"
-        }
-      ]
-    }
-  ]
+export function Example() {
+  return <Button variant="outline">Button</Button>;
 }
 ```
 
-### 5. Build & Deploy
+### Manual
+
+Copy component source from the component docs via the Manual tab. Manual installation is useful when you want to review the source before adding it to your project.
+
+### Registry index
+
+The registry index is available at:
 
 ```bash
-pnpm registry:build
-pnpm build
+https://tanstartercn.tsu.moe/r/registry.json
 ```
 
-Deploy your app and your component is live!
-
----
-
-## Installing Components
-
-To install a component from any registry built with this template:
-
-```bash
-npx shadcn@latest add https://example.com/r/my-button.json
-```
-
-Then use it:
-
-```tsx
-import { MyButton } from "@/components/ui/my-button";
-
-export function Demo() {
-  return <MyButton variant="outline">Click me</MyButton>;
-}
-```
+Use the index to inspect available components. Install individual components with their `/r/<component>.json` URL.

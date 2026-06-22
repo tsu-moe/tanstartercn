@@ -1,81 +1,88 @@
 ---
 title: Introduction
-description: A template for building and publishing your own shadcn registry components.
+description: Build, document, and deploy this custom shadcn registry.
 ---
 
-A **ready-to-use template** for creating and publishing custom components to the [shadcn registry](https://ui.shadcn.com/docs/registry).
+This repository publishes a custom [shadcn registry](https://ui.shadcn.com/docs/registry) with a documentation site, live component previews, generated registry JSON, and machine-readable docs for AI coding assistants.
 
-## What You Get
+The app is a static-hostable TanStack Start SPA deployed to Cloudflare Workers with Worker Static Assets. Component docs are authored in MDX with Fumadocs, registry items are built from `registry.json`, and generated files are served from stable public URLs.
 
-- 📦 **Simple structure** - One component file + one config file
-- 📚 **Documentation site** - Powered by Fumadocs
-- 🎨 **Registry compatible** - Works with `npx shadcn add`
-- 🤖 **[Agent ready](https://www.mintlify.com/score/startercn)** - Ships with `llms.txt`, `llms-full.txt`, API catalog routes, and agent skill discovery endpoints
-- 🔊 **[Web audio feedback](https://audio.raphaelsalaja.com/)** - Built-in interaction sounds powered by `@web-kits/audio`
-- 📳 **[Web haptics](https://haptics.lochie.me/)** - Optional haptic feedback for supported devices via `web-haptics`
-- ✨ **[Motion animations](https://motion.dev/)** - Uses `motion` for animated UI states and transitions
-- 🎯 **[Animated icons](https://lucide-animated.com/)** - Includes reusable animated icons for buttons, sharing, and navigation
-- 🔄 **[View transitions](https://nextjs.org/docs/app/api-reference/config/next-config-js/viewTransition)** - Uses Next.js view transitions for smoother page changes
-- 🚀 **Deploy ready** - Deploy anywhere
+## What this repo includes
+
+- **Fumadocs documentation** in `content/docs`, discovered from the filesystem.
+- **shadcn registry output** generated from `registry.json` into `public/r`.
+- **Live component previews** that can render examples from `examples` or inline MDX.
+- **A default `luma` registry style** for new components, plus the current placeholder item.
+- **Static AI documentation endpoints** such as `/llms.txt`, `/llms-full.txt`, and `/llms.md/...`.
+- **Cloudflare Workers deployment** using Worker Static Assets.
 
 ## Tech Stack
 
-- `Next.js 16` + App Router
-- `React 19`
+- `TanStack Start`
+- `TanStack Router`
+- `React 19` + `TypeScript`
+- `Vite`
 - `Tailwind CSS 4`
 - `Fumadocs`
+- `shadcn/ui`
 - `motion`
-- `@web-kits/audio`
-- `web-haptics`
 - `shiki` + `rehype-pretty-code`
+- `Cloudflare Workers`
 
 ## How It Works
 
-1. Edit your component at `registry/new-york/your-component.tsx`
-2. Update `registry.json` with your component name and details
-3. Run `pnpm registry:build`
+1. Add or edit registry source in `src/registry/luma`.
+2. Add the registry item to `registry.json`.
+3. Document the component in `content/docs/components`.
+4. Render a preview with `ComponentPreview`.
+5. Build the generated registry files with `pnpm registry:build`.
+6. Build generated docs and agent files with `pnpm static:build`.
 
-That's it. Deploy your app and users can install your component:
+Once deployed, users can install registry items with the shadcn CLI:
 
 ```bash
-npx shadcn@latest add https://your-site.com/r/your-component.json
+npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 ```
 
-## FAQ
+## Important Paths
 
-<Accordion type="multiple">
+- `content/docs` - MDX documentation pages.
+- `examples` - reusable preview examples.
+- `src/registry/luma` - installable registry component source.
+- `src/shared/components` - app and docs UI.
+- `src/shared/components/ui` - complete shadcn/ui primitives used by the site.
+- `src/shared/lib/registry.ts` - preview/component lookup wiring.
+- `registry.json` - shadcn registry manifest.
+- `public/r` - generated registry JSON files.
+- `scripts/generate-static-assets.mjs` - generated docs, LLM, sitemap, and discovery files.
 
-<AccordionItem value="faq-1">
-<AccordionTrigger>
-Why copy/paste instead of npm packages?
-</AccordionTrigger>
-<AccordionContent>
+Do not edit generated output by hand. Regenerate it with the matching script instead.
 
-The shadcn philosophy gives you **ownership** of the code. You can customize components to your exact needs without fighting library constraints.
+## Public Endpoints
 
-</AccordionContent>
-</AccordionItem>
+- `/r/registry.json` - registry index.
+- `/r/button.json` - individual registry item.
+- `/llms.txt` - quick AI docs index.
+- `/llms-full.txt` - complete generated docs.
+- `/openapi.json` - machine-readable endpoint catalog.
+- `/.well-known/agent-skills/index.json` - agent skill discovery.
 
-<AccordionItem value="faq-2">
-<AccordionTrigger>
-Which frameworks are supported?
-</AccordionTrigger>
-<AccordionContent>
+The production origin comes from `FALLBACK_SITE_ORIGIN` in `src/shared/constants/site.ts`, unless `SITE_URL` is provided at build time.
 
-Any React framework: Next.js, Remix, Astro, Gatsby, Vite, etc.
+## Common Commands
 
-</AccordionContent>
-</AccordionItem>
+```bash
+pnpm dev
+pnpm registry:build
+pnpm static:build
+pnpm typecheck
+pnpm check
+pnpm build
+pnpm deploy
+```
 
-<AccordionItem value="faq-3">
-<AccordionTrigger>
-Can I publish multiple components?
-</AccordionTrigger>
-<AccordionContent>
+Use `pnpm registry:build` after registry changes, `pnpm static:build` after docs or static endpoint changes, and `pnpm build` before deploy.
 
-Yes! Add more files to `registry/new-york/` and list them in `registry.json`.
+## Next Steps
 
-</AccordionContent>
-</AccordionItem>
-
-</Accordion>
+Read [Installation](/docs/installation) to install registry components, [Styling](/docs/styling) to customize tokens, [Components](/docs/components) to browse registry items, and [Extending](/docs/extending) to add new docs pages or components.
