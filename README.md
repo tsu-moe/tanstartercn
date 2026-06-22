@@ -2,8 +2,6 @@
   <img src="https://tanstartercn.tsu.moe/marketing-og-image.png" alt="tanstartercn" />
 </p>
 
-<h1 align="center">tanstartercn</h1>
-
 <p align="center">
   A highly customizable shadcn registry template repository built with TanStack Start.  Fork, customize, and deploy free to Cloudflare Workers.
   <br />
@@ -13,6 +11,11 @@
   <a href="https://tanstartercn.tsu.moe/r/registry.json">Registry</a>
   ·
   <a href="https://tanstartercn.tsu.moe/llms.txt">LLMS.txt</a>
+  <br />
+  <br />
+  <a href="https://deploy.workers.cloudflare.com/?url=https://github.com/tsu-moe/tanstartercn.git">
+    <img src="https://deploy.workers.cloudflare.com/button" alt="Deploy to Cloudflare" />
+  </a>
 </p>
 
 ## Features
