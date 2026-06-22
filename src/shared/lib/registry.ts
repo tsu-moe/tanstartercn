@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 import { Button as LumaButton } from "@/registry/luma/button";
+import Sidebar01Page from "@/registry/luma/sidebar-01/page";
 import { YourComponent } from "@/registry/luma/your-component";
 
 import registryManifest from "../../../registry.json";
@@ -17,6 +18,7 @@ type RegistryItem = {
   type: string;
   title?: string;
   description?: string;
+  categories?: string[];
   files?: RegistryFile[];
 };
 
@@ -90,6 +92,7 @@ const registryItemsByStyle = manifestItems.reduce<RegistryItemMap>(
 const registryComponents: RegistryComponentMap = {
   luma: {
     button: LumaButton as RegistryComponent,
+    "sidebar-01": Sidebar01Page as RegistryComponent,
     "your-component": YourComponent as RegistryComponent,
   },
 };

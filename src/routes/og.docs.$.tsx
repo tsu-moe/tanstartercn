@@ -6,7 +6,7 @@ import { source } from "@/shared/lib/source";
 export const Route = createFileRoute("/og/docs/$")({
   server: {
     handlers: {
-      GET: async ({ params }) => {
+      GET: async ({ params }: { params: { _splat?: string } }) => {
         const slugs = params._splat?.split("/").filter(Boolean) ?? [];
         const imageFile = slugs.at(-1);
         const pageSlugs =
@@ -24,4 +24,4 @@ export const Route = createFileRoute("/og/docs/$")({
       },
     },
   },
-});
+} as any);

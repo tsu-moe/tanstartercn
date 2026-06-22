@@ -6,7 +6,7 @@ import { createOgImageResponse } from "@/shared/lib/seo/og-image";
 export const Route = createFileRoute("/og")({
   server: {
     handlers: {
-      GET: async ({ request }) => {
+      GET: async ({ request }: { request: Request }) => {
         const { searchParams } = new URL(request.url);
 
         return createOgImageResponse({
@@ -16,4 +16,4 @@ export const Route = createFileRoute("/og")({
       },
     },
   },
-});
+} as any);

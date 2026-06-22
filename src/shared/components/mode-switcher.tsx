@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedThemeIcon } from "@/shared/components/animated-icons/theme";
+import { ThemeIcon } from "@/shared/components/icons";
 import { Button } from "@/shared/components/ui/button";
 import { Kbd } from "@/shared/components/ui/kbd";
 import {
@@ -11,8 +11,7 @@ import {
 import { useThemeToggle } from "@/shared/hooks/use-theme-toggle";
 
 export const ModeSwitcher = () => {
-  const { resolvedTheme, toggleTheme } = useThemeToggle();
-  const themeState = resolvedTheme === "dark" ? "dark" : "light";
+  const { toggleTheme } = useThemeToggle();
 
   return (
     <Tooltip>
@@ -24,11 +23,7 @@ export const ModeSwitcher = () => {
           onClick={toggleTheme}
           title="Toggle theme"
         >
-          <AnimatedThemeIcon
-            key={themeState}
-            state={themeState}
-            className="size-4"
-          />
+          <ThemeIcon className="size-4.5" strokeWidth="2" />
           <span className="sr-only">Toggle theme</span>
         </Button>
       </TooltipTrigger>

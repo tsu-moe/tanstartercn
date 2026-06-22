@@ -259,11 +259,19 @@ const buildOpenApiDocument = (origin) => {
 
 const publicDir = path.join(root, "public");
 const docsDir = path.join(root, "content", "docs");
+const generatedDir = path.join(root, "src", "shared", "generated");
 const siteUrl = SITE.URL.replace(/\/$/, "");
 
 const writePublic = async (route, body) => {
   const relative = route.replace(/^\/+/, "");
   const file = path.join(publicDir, relative);
+
+  await mkdir(path.dirname(file), { recursive: true });
+  await writeFile(file, body);
+};
+
+const writeGenerated = async (fileName, body) => {
+  const file = path.join(generatedDir, fileName);
 
   await mkdir(path.dirname(file), { recursive: true });
   await writeFile(file, body);
@@ -695,8 +703,10 @@ await rm(path.join(publicDir, "docs"), { force: true, recursive: true });
 await rm(path.join(publicDir, ".well-known"), { force: true, recursive: true });
 
 const pages = await readDocs();
+const llmsIndex = docsIndex(pages);
 
-await writePublic(ROUTES.LLMS, docsIndex(pages));
+await writePublic(ROUTES.LLMS, llmsIndex);
+await writeGenerated("llms.txt", llmsIndex);
 await writePublic(
   ROUTES.LLMS_FULL,
   pages.map((page) => markdownForPage(page).trim()).join("\n\n")

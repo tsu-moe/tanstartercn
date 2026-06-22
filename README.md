@@ -145,11 +145,12 @@ npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 
 ## Acknowledgements
 
-This project was originally forked from [shadcn-labs/startercn](https://github.com/shadcn-labs/startercn) and refactored into TanStack Start together with my own preferences.
+- This project was originally forked from [shadcn-labs/startercn](https://github.com/shadcn-labs/startercn) and refactored into TanStack Start together with my own preferences.
+  - I urge you to support the original project and use it if you prefer a Vercel or Next.js approach to deploying this repository.
 
-- I urge you to support the original project and use it if you prefer a Vercel or Next.js approach to deploying this repository.
+- I'd also like to spend some time appreciating the amazing work being done at [fumadocs](https://github.com/fuma-nama/fumadocs); the cleanest React documentation framework in the ecosystem today and their constant innovation in the documentation space.
 
-I'd also like to spend some time appreciating the amazing work being done at [fumadocs](https://github.com/fuma-nama/fumadocs); the cleanest React documentation framework in the ecosystem today and their constant innovation in the documentation space.
+- I would also like to extend my thanks to [shadcn-ui-blocks](https://github.com/akash3444/shadcn-ui-blocks) for being the inspiration to the `/blocks` page of the registry.
 
 ## License
 

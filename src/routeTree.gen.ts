@@ -12,11 +12,16 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as OgRouteImport } from './routes/og'
 import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
 import { Route as DocsRouteImport } from './routes/docs'
+import { Route as BlocksRouteImport } from './routes/blocks'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as BlocksIndexRouteImport } from './routes/blocks.index'
 import { Route as DocsSplatRouteImport } from './routes/docs.$'
+import { Route as BlocksBlockRouteImport } from './routes/blocks.$block'
+import { Route as BlocksBlockIndexRouteImport } from './routes/blocks.$block.index'
 import { Route as ViewStyleNameNameRouteImport } from './routes/view.$styleName.$name'
 import { Route as OgDocsSplatRouteImport } from './routes/og.docs.$'
+import { Route as BlocksBlockPreviewRouteImport } from './routes/blocks.$block.preview'
 
 const OgRoute = OgRouteImport.update({
   id: '/og',
@@ -33,6 +38,11 @@ const DocsRoute = DocsRouteImport.update({
   path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlocksRoute = BlocksRouteImport.update({
+  id: '/blocks',
+  path: '/blocks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -43,10 +53,25 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
   path: '/',
   getParentRoute: () => DocsRoute,
 } as any)
+const BlocksIndexRoute = BlocksIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlocksRoute,
+} as any)
 const DocsSplatRoute = DocsSplatRouteImport.update({
   id: '/$',
   path: '/$',
   getParentRoute: () => DocsRoute,
+} as any)
+const BlocksBlockRoute = BlocksBlockRouteImport.update({
+  id: '/$block',
+  path: '/$block',
+  getParentRoute: () => BlocksRoute,
+} as any)
+const BlocksBlockIndexRoute = BlocksBlockIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => BlocksBlockRoute,
 } as any)
 const ViewStyleNameNameRoute = ViewStyleNameNameRouteImport.update({
   id: '/view/$styleName/$name',
@@ -58,71 +83,103 @@ const OgDocsSplatRoute = OgDocsSplatRouteImport.update({
   path: '/docs/$',
   getParentRoute: () => OgRoute,
 } as any)
+const BlocksBlockPreviewRoute = BlocksBlockPreviewRouteImport.update({
+  id: '/preview',
+  path: '/preview',
+  getParentRoute: () => BlocksBlockRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/blocks': typeof BlocksRouteWithChildren
   '/docs': typeof DocsRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRouteWithChildren
+  '/blocks/$block': typeof BlocksBlockRouteWithChildren
   '/docs/$': typeof DocsSplatRoute
+  '/blocks/': typeof BlocksIndexRoute
   '/docs/': typeof DocsIndexRoute
+  '/blocks/$block/preview': typeof BlocksBlockPreviewRoute
   '/og/docs/$': typeof OgDocsSplatRoute
   '/view/$styleName/$name': typeof ViewStyleNameNameRoute
+  '/blocks/$block/': typeof BlocksBlockIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRouteWithChildren
   '/docs/$': typeof DocsSplatRoute
+  '/blocks': typeof BlocksIndexRoute
   '/docs': typeof DocsIndexRoute
+  '/blocks/$block/preview': typeof BlocksBlockPreviewRoute
   '/og/docs/$': typeof OgDocsSplatRoute
   '/view/$styleName/$name': typeof ViewStyleNameNameRoute
+  '/blocks/$block': typeof BlocksBlockIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/blocks': typeof BlocksRouteWithChildren
   '/docs': typeof DocsRouteWithChildren
   '/llms.txt': typeof LlmsDottxtRoute
   '/og': typeof OgRouteWithChildren
+  '/blocks/$block': typeof BlocksBlockRouteWithChildren
   '/docs/$': typeof DocsSplatRoute
+  '/blocks/': typeof BlocksIndexRoute
   '/docs/': typeof DocsIndexRoute
+  '/blocks/$block/preview': typeof BlocksBlockPreviewRoute
   '/og/docs/$': typeof OgDocsSplatRoute
   '/view/$styleName/$name': typeof ViewStyleNameNameRoute
+  '/blocks/$block/': typeof BlocksBlockIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/blocks'
     | '/docs'
     | '/llms.txt'
     | '/og'
+    | '/blocks/$block'
     | '/docs/$'
+    | '/blocks/'
     | '/docs/'
+    | '/blocks/$block/preview'
     | '/og/docs/$'
     | '/view/$styleName/$name'
+    | '/blocks/$block/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/llms.txt'
     | '/og'
     | '/docs/$'
+    | '/blocks'
     | '/docs'
+    | '/blocks/$block/preview'
     | '/og/docs/$'
     | '/view/$styleName/$name'
+    | '/blocks/$block'
   id:
     | '__root__'
     | '/'
+    | '/blocks'
     | '/docs'
     | '/llms.txt'
     | '/og'
+    | '/blocks/$block'
     | '/docs/$'
+    | '/blocks/'
     | '/docs/'
+    | '/blocks/$block/preview'
     | '/og/docs/$'
     | '/view/$styleName/$name'
+    | '/blocks/$block/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BlocksRoute: typeof BlocksRouteWithChildren
   DocsRoute: typeof DocsRouteWithChildren
   LlmsDottxtRoute: typeof LlmsDottxtRoute
   OgRoute: typeof OgRouteWithChildren
@@ -152,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blocks': {
+      id: '/blocks'
+      path: '/blocks'
+      fullPath: '/blocks'
+      preLoaderRoute: typeof BlocksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -166,12 +230,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsIndexRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/blocks/': {
+      id: '/blocks/'
+      path: '/'
+      fullPath: '/blocks/'
+      preLoaderRoute: typeof BlocksIndexRouteImport
+      parentRoute: typeof BlocksRoute
+    }
     '/docs/$': {
       id: '/docs/$'
       path: '/$'
       fullPath: '/docs/$'
       preLoaderRoute: typeof DocsSplatRouteImport
       parentRoute: typeof DocsRoute
+    }
+    '/blocks/$block': {
+      id: '/blocks/$block'
+      path: '/$block'
+      fullPath: '/blocks/$block'
+      preLoaderRoute: typeof BlocksBlockRouteImport
+      parentRoute: typeof BlocksRoute
+    }
+    '/blocks/$block/': {
+      id: '/blocks/$block/'
+      path: '/'
+      fullPath: '/blocks/$block/'
+      preLoaderRoute: typeof BlocksBlockIndexRouteImport
+      parentRoute: typeof BlocksBlockRoute
     }
     '/view/$styleName/$name': {
       id: '/view/$styleName/$name'
@@ -187,8 +272,42 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OgDocsSplatRouteImport
       parentRoute: typeof OgRoute
     }
+    '/blocks/$block/preview': {
+      id: '/blocks/$block/preview'
+      path: '/preview'
+      fullPath: '/blocks/$block/preview'
+      preLoaderRoute: typeof BlocksBlockPreviewRouteImport
+      parentRoute: typeof BlocksBlockRoute
+    }
   }
 }
+
+interface BlocksBlockRouteChildren {
+  BlocksBlockPreviewRoute: typeof BlocksBlockPreviewRoute
+  BlocksBlockIndexRoute: typeof BlocksBlockIndexRoute
+}
+
+const BlocksBlockRouteChildren: BlocksBlockRouteChildren = {
+  BlocksBlockPreviewRoute: BlocksBlockPreviewRoute,
+  BlocksBlockIndexRoute: BlocksBlockIndexRoute,
+}
+
+const BlocksBlockRouteWithChildren = BlocksBlockRoute._addFileChildren(
+  BlocksBlockRouteChildren,
+)
+
+interface BlocksRouteChildren {
+  BlocksBlockRoute: typeof BlocksBlockRouteWithChildren
+  BlocksIndexRoute: typeof BlocksIndexRoute
+}
+
+const BlocksRouteChildren: BlocksRouteChildren = {
+  BlocksBlockRoute: BlocksBlockRouteWithChildren,
+  BlocksIndexRoute: BlocksIndexRoute,
+}
+
+const BlocksRouteWithChildren =
+  BlocksRoute._addFileChildren(BlocksRouteChildren)
 
 interface DocsRouteChildren {
   DocsSplatRoute: typeof DocsSplatRoute
@@ -214,6 +333,7 @@ const OgRouteWithChildren = OgRoute._addFileChildren(OgRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BlocksRoute: BlocksRouteWithChildren,
   DocsRoute: DocsRouteWithChildren,
   LlmsDottxtRoute: LlmsDottxtRoute,
   OgRoute: OgRouteWithChildren,

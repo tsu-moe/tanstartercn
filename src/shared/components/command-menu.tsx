@@ -373,7 +373,7 @@ export const CommandMenu = ({
                     onSelect={() =>
                       runCommand(() =>
                         router.push(
-                          `/blocks/${block.categories[0]}#${block.name}`
+                          `/blocks?category=${encodeURIComponent(block.categories[0] ?? "all")}`
                         )
                       )
                     }

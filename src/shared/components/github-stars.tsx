@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedGitHubIcon } from "@/shared/components/animated-icons/github";
+import { GithubIcon } from "@/shared/components/icons";
 import { buttonVariants } from "@/shared/components/ui/button";
 import {
   Tooltip,
@@ -20,12 +20,12 @@ export const GitHubStars = ({
   <Tooltip>
     <TooltipTrigger asChild>
       <a
-        className={cn(buttonVariants({ size: "sm", variant: "ghost" }))}
+        className={cn("ms-2", buttonVariants({ size: "sm", variant: "ghost" }))}
         href={addQueryParams(LINK.GITHUB, UTM_PARAMS)}
         rel="noopener"
         target="_blank"
       >
-        <AnimatedGitHubIcon className="-translate-y-px" />
+        <GithubIcon className="-translate-y-px" />
         <span className="text-muted-foreground text-xs tabular-nums">
           {new Intl.NumberFormat("en-US", {
             compactDisplay: "short",

@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import llmsText from "../../public/llms.txt?raw";
+import llmsText from "@/shared/generated/llms.txt?raw";
 
 type AssetFetcher = {
   fetch: (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -17,7 +17,10 @@ export const Route = createFileRoute("/llms.txt")({
   preload: false,
   server: {
     handlers: {
-      GET: async (context) => {
+      GET: async (context: {
+        request: Request;
+        env?: { ASSETS?: AssetFetcher };
+      }) => {
         const assets = (
           context as typeof context & { env?: { ASSETS?: AssetFetcher } }
         ).env?.ASSETS;
@@ -36,4 +39,4 @@ export const Route = createFileRoute("/llms.txt")({
       },
     },
   },
-});
+} as any);
