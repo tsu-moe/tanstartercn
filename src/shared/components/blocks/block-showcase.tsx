@@ -164,7 +164,7 @@ export function BlockShowcase({
     <div
       className={cn(
         "relative flex h-full w-full items-center justify-center overflow-auto rounded-xl border",
-        !isIframeHeightDefined && "h-[700px]"
+        !isIframeHeightDefined && "h-175"
       )}
     >
       <iframe
@@ -208,7 +208,7 @@ export function BlockShowcase({
         )}
         <div className="flex flex-wrap items-center gap-2 md:justify-end">
           <BlockInstallButton name={block.name} />
-          <div className="flex h-8 items-center gap-1 rounded-md border bg-background p-1 shadow-xs dark:bg-input/30">
+          <div className="flex h-8 items-center gap-1 rounded-md border bg-background p-1 shadow-xs dark:bg-input/30 dark:border-input">
             <div className="hidden items-center gap-1 md:flex">
               {screens.map(({ name, label, icon: Icon }) => (
                 <Tooltip key={name}>
@@ -279,7 +279,7 @@ export function BlockShowcase({
             previewFrame
           ) : (
             <ResizablePanelGroup
-              className="!overflow-visible"
+              className="overflow-visible!"
               direction="horizontal"
             >
               <ResizablePanel

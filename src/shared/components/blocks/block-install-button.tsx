@@ -46,9 +46,9 @@ export function BlockInstallButton({ name }: { name: string }) {
   const displayCommand = displayCommands[packageManager];
 
   return (
-    <div className="inline-flex h-8 overflow-hidden rounded-md border bg-background shadow-xs dark:bg-input/30">
+    <div className="inline-flex h-8 overflow-hidden rounded-md border bg-background shadow-xs dark:border-input">
       <CopyButton
-        className="h-8 rounded-none border-0 px-2 text-sm font-normal shadow-none hover:bg-accent"
+        className="h-8 rounded-none border-0 px-2 text-sm font-normal shadow-none"
         event="copy_registry_command"
         value={command}
         variant="outline"
