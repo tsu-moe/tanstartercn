@@ -43,16 +43,16 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-hotkeys-hook": "catalog:",
-    "react-resizable-panels": "^4.11.2",
+    "react-resizable-panels": "^4.12.1",
     "shiki": "catalog:",
     "sonner": "catalog:",
     "tailwind-merge": "catalog:",
-    "takumi-js": "^1.8.7",
+    "takumi-js": "^2.0.0-rc.9",
     "vaul": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.42.3",
+    "@cloudflare/vite-plugin": "^1.43.0",
     "@tailwindcss/postcss": "catalog:",
     "@tanstack/router-plugin": "catalog:",
     "@types/mdx": "catalog:",
@@ -68,7 +68,7 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:",
-    "wrangler": "^4.105.0"
+    "wrangler": "^4.107.0"
   },
   "devEngines": {
     "packageManager": {
