@@ -1,8 +1,5 @@
 import { fromJsx } from "takumi-js/helpers/jsx";
-import takumiWasmModule, {
-  init as initTakumiWasm,
-  Renderer,
-} from "takumi-js/wasm";
+import { init as initTakumiWasm, Renderer } from "takumi-js/wasm";
 
 import { LogoMark } from "@/shared/components/logo";
 import { SITE } from "@/shared/constants/site";
@@ -47,10 +44,10 @@ export const ogImageSize = {
 } as const;
 
 const getRenderer = () => {
-  rendererPromise ??= Promise.resolve(takumiWasmModule)
-    .then((module) => initTakumiWasm({ module_or_path: module }))
+  rendererPromise ??= Promise.resolve()
+    .then(() => initTakumiWasm())
     .then(() => {
-      renderer = new Renderer({ loadDefaultFonts: true });
+      renderer = new Renderer();
       return renderer;
     });
 
@@ -171,7 +168,7 @@ const createOgImageElement = ({
 export const createOgImageResponse = async (options?: OgImageOptions) => {
   const takumiRenderer = await getRenderer();
   const { node, stylesheets } = await fromJsx(createOgImageElement(options));
-  const image = takumiRenderer.render(node, {
+  const image = await takumiRenderer.render(node, {
     ...ogImageSize,
     format: "png",
     stylesheets,
