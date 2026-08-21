@@ -34,7 +34,7 @@
 - `Fumadocs` for documentation
 - `shiki` + `rehype-pretty-code` for code blocks
 - `sonner` for toasts
-- `radix-ui` + `vaul` for accessible primitives
+- `@base-ui/react` for accessible primitives
 
 ## Development Setup
 

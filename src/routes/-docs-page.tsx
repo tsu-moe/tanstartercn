@@ -258,25 +258,37 @@ export const DocsPage = ({ data }: { data: DocsPageData | undefined }) => {
                 {doc.links ? (
                   <div className="flex items-center space-x-2 pt-4">
                     {doc.links.doc && (
-                      <Badge asChild variant="secondary">
-                        <a
-                          href={doc.links.doc}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          Docs <ArrowUpRightIcon />
-                        </a>
+                      <Badge
+                        render={(props) => (
+                          <a
+                            {...props}
+                            href={doc.links?.doc}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {props.children}
+                          </a>
+                        )}
+                        variant="secondary"
+                      >
+                        Docs <ArrowUpRightIcon />
                       </Badge>
                     )}
                     {doc.links.api && (
-                      <Badge asChild variant="secondary">
-                        <a
-                          href={doc.links.api}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          API Reference <ArrowUpRightIcon />
-                        </a>
+                      <Badge
+                        render={(props) => (
+                          <a
+                            {...props}
+                            href={doc.links?.api}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {props.children}
+                          </a>
+                        )}
+                        variant="secondary"
+                      >
+                        API Reference <ArrowUpRightIcon />
                       </Badge>
                     )}
                   </div>

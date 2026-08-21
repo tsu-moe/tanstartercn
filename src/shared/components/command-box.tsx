@@ -61,7 +61,7 @@ export const CommandBox = ({ className }: { className?: string }) => {
             {Object.entries(pmCommands).map(([key]) => (
               <TabsTrigger
                 key={key}
-                className="data-[state=active]:border-input h-7 border border-transparent pt-0.5 data-[state=active]:shadow-none"
+                className="data-active:border-input h-7 border border-transparent pt-0.5 data-active:shadow-none"
                 value={key}
               >
                 {key}
@@ -75,11 +75,13 @@ export const CommandBox = ({ className }: { className?: string }) => {
             className="block min-w-full w-max whitespace-nowrap text-left font-mono text-sm text-muted-foreground"
           >
             {Object.entries(pmCommands).map(([key, command]) => (
-              <TabsContent key={key} value={key} asChild>
-                <span className="inline-block">
-                  <span className="select-none">$ </span>
-                  {command} add
-                </span>
+              <TabsContent
+                key={key}
+                value={key}
+                render={<span className="inline-block" />}
+              >
+                <span className="select-none">$ </span>
+                {command} add
               </TabsContent>
             ))}{" "}
             <span>{SITE.REGISTRY}/r/</span>

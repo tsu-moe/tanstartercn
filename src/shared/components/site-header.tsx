@@ -28,15 +28,13 @@ export const SiteHeader = () => (
         />
         <BrandContextMenu>
           <Button
-            asChild
+            render={<Link href={ROUTES.HOME} />}
             variant="ghost"
             size="icon"
             className="hidden size-8 lg:flex"
           >
-            <Link href={ROUTES.HOME}>
-              <LogoMark className="size-5" />
-              <span className="sr-only">{SITE.NAME}</span>
-            </Link>
+            <LogoMark className="size-5" />
+            <span className="sr-only">{SITE.NAME}</span>
           </Button>
         </BrandContextMenu>
         <MainNav items={navItems} className="hidden lg:flex" />

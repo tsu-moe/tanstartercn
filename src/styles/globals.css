@@ -155,6 +155,7 @@
     @apply overscroll-y-none scroll-smooth;
   }
   body {
+    position: relative;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
   }

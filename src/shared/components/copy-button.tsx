@@ -111,7 +111,7 @@ export const CopyButton = ({
 
   return (
     <Tooltip>
-      <TooltipTrigger asChild>{copyButton}</TooltipTrigger>
+      <TooltipTrigger render={copyButton} />
       <TooltipContent>
         {isCopied ? "Copied" : "Copy to Clipboard"}
       </TooltipContent>

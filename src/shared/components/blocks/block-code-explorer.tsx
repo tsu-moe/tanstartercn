@@ -270,23 +270,26 @@ function TreeItem({
     const isActive = activePath === item.file.path;
 
     return (
-      <Tooltip delayDuration={1000}>
-        <TooltipTrigger asChild>
-          <Button
-            className="h-8 w-full justify-start px-2 text-base font-medium text-foreground/80"
-            data-state={isActive ? "active" : undefined}
-            onClick={() => onSelectFile(item.file.path)}
-            size="sm"
-            type="button"
-            variant={isActive ? "secondary" : "ghost"}
-          >
-            {isLoadingCode && isActive ? (
-              <Loader2Icon className="animate-spin" />
-            ) : (
-              <FileIcon className="text-muted-foreground" />
-            )}
-            <span className="truncate">{item.name}</span>
-          </Button>
+      <Tooltip>
+        <TooltipTrigger
+          delay={1000}
+          render={
+            <Button
+              className="h-8 w-full justify-start px-2 text-base font-medium text-foreground/80"
+              data-active={isActive || undefined}
+              onClick={() => onSelectFile(item.file.path)}
+              size="sm"
+              type="button"
+              variant={isActive ? "secondary" : "ghost"}
+            />
+          }
+        >
+          {isLoadingCode && isActive ? (
+            <Loader2Icon className="animate-spin" />
+          ) : (
+            <FileIcon className="text-muted-foreground" />
+          )}
+          <span className="truncate">{item.name}</span>
         </TooltipTrigger>
         <TooltipContent side="right">{item.name}</TooltipContent>
       </Tooltip>
@@ -295,20 +298,22 @@ function TreeItem({
 
   return (
     <Collapsible
-      className="group/collapsible [&[data-state=open]>button>svg:first-child]:rotate-90"
+      className="group/collapsible [&[data-open]>button>svg:first-child]:rotate-90"
       defaultOpen={activePath.includes(item.path)}
     >
-      <CollapsibleTrigger asChild>
-        <Button
-          className="h-8 w-full justify-start px-2 text-base font-medium text-foreground/80"
-          size="sm"
-          type="button"
-          variant="ghost"
-        >
-          <ChevronRightIcon className="transition-transform" />
-          <FolderIcon className="fill-muted-foreground stroke-muted-foreground" />
-          <span className="truncate">{item.name}</span>
-        </Button>
+      <CollapsibleTrigger
+        render={
+          <Button
+            className="h-8 w-full justify-start px-2 text-base font-medium text-foreground/80"
+            size="sm"
+            type="button"
+            variant="ghost"
+          />
+        }
+      >
+        <ChevronRightIcon className="transition-transform" />
+        <FolderIcon className="fill-muted-foreground stroke-muted-foreground" />
+        <span className="truncate">{item.name}</span>
       </CollapsibleTrigger>
       <CollapsibleContent className="overflow-hidden ps-4">
         <Tree

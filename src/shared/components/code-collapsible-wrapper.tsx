@@ -29,34 +29,34 @@ export const CodeCollapsibleWrapper = ({
       {...props}
     >
       <CollapsibleContent
-        forceMount
-        className="relative mt-6 overflow-hidden data-[state=closed]:max-h-64 data-[state=closed]:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!"
+        keepMounted
+        className="relative mt-6 overflow-hidden data-closed:max-h-64 data-closed:[content-visibility:auto] [&>figure]:mt-0 [&>figure]:md:mx-0!"
       >
-        <CollapsibleTrigger asChild>
-          <div
-            className={cn(
-              "absolute top-1.5 right-11 z-10 flex h-7 items-center",
-              navTriggerClassName
-            )}
+        <div
+          className={cn(
+            "absolute top-1.5 right-11 z-10 flex h-7 items-center",
+            navTriggerClassName
+          )}
+        >
+          <CollapsibleTrigger
+            render={
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-muted-foreground h-7 rounded-md px-2"
+              />
+            }
           >
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-muted-foreground h-7 rounded-md px-2"
-            >
-              {isOpened ? "Collapse" : "Expand"}
-            </Button>
-            <Separator orientation="vertical" className="mx-1.5 h-4!" />
-          </div>
-        </CollapsibleTrigger>
+            {isOpened ? "Collapse" : "Expand"}
+          </CollapsibleTrigger>
+          <Separator orientation="vertical" className="mx-1.5 h-4!" />
+        </div>
         {children}
       </CollapsibleContent>
 
-      <div className="absolute inset-x-0 -bottom-2 flex h-20 items-center justify-center rounded-b-lg bg-linear-to-b from-code/70 to-code group-data-[state=open]/collapsible:hidden">
-        <CollapsibleTrigger asChild>
-          <Button variant="outline" size="sm">
-            Expand
-          </Button>
+      <div className="absolute inset-x-0 -bottom-2 flex h-20 items-center justify-center rounded-b-lg bg-linear-to-b from-code/70 to-code group-data-open/collapsible:hidden">
+        <CollapsibleTrigger render={<Button variant="outline" size="sm" />}>
+          Expand
         </CollapsibleTrigger>
       </div>
     </Collapsible>

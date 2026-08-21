@@ -24,15 +24,13 @@ const GetStartedButton = () => {
 
   return (
     <Button
-      asChild
+      render={<Link href={ROUTES.DOCS_INSTALLATION} />}
       className="px-4"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link href={ROUTES.DOCS_INSTALLATION}>
-        Get Started
-        <ArrowRightIcon className="hidden sm:inline" ref={arrowRightRef} />
-      </Link>
+      Get Started
+      <ArrowRightIcon className="hidden sm:inline" ref={arrowRightRef} />
     </Button>
   );
 };
@@ -50,20 +48,18 @@ const BrowseComponentsButton = () => {
 
   return (
     <Button
-      asChild
+      render={<Link href={ROUTES.DOCS_COMPONENTS} />}
       variant="outline"
       className="px-4"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <Link href={ROUTES.DOCS_COMPONENTS}>
-        <ComponentIcon
-          className="hidden sm:inline"
-          ref={componentIconRef}
-          size={22}
-        />
-        Browse Components
-      </Link>
+      <ComponentIcon
+        className="hidden sm:inline"
+        ref={componentIconRef}
+        size={22}
+      />
+      Browse Components
     </Button>
   );
 };

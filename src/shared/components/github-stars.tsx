@@ -18,23 +18,31 @@ export const GitHubStars = ({
   stargazersCount: number;
 }) => (
   <Tooltip>
-    <TooltipTrigger asChild>
-      <a
-        className={cn("ms-2", buttonVariants({ size: "sm", variant: "ghost" }))}
-        href={addQueryParams(LINK.GITHUB, UTM_PARAMS)}
-        rel="noopener"
-        target="_blank"
-      >
-        <GithubIcon className="-translate-y-px" />
-        <span className="text-muted-foreground text-xs tabular-nums">
-          {new Intl.NumberFormat("en-US", {
-            compactDisplay: "short",
-            notation: "compact",
-          })
-            .format(stargazersCount)
-            .toLowerCase()}
-        </span>
-      </a>
+    <TooltipTrigger
+      render={(props) => (
+        <a
+          {...props}
+          className={cn(
+            "ms-2",
+            buttonVariants({ size: "sm", variant: "ghost" })
+          )}
+          href={addQueryParams(LINK.GITHUB, UTM_PARAMS)}
+          rel="noopener"
+          target="_blank"
+        >
+          {props.children}
+        </a>
+      )}
+    >
+      <GithubIcon className="-translate-y-px" />
+      <span className="text-muted-foreground text-xs tabular-nums">
+        {new Intl.NumberFormat("en-US", {
+          compactDisplay: "short",
+          notation: "compact",
+        })
+          .format(stargazersCount)
+          .toLowerCase()}
+      </span>
     </TooltipTrigger>
     <TooltipContent>
       {new Intl.NumberFormat("en-US").format(stargazersCount)} stars

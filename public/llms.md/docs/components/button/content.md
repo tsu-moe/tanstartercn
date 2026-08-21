@@ -11,7 +11,7 @@ npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 ```
 
 ```bash
-npm install radix-ui
+npm install @base-ui/react
 ```
 
 ## Usage

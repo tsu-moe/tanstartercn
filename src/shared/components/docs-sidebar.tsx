@@ -42,14 +42,12 @@ const SidebarPageGroup = ({
           {pages.map((page) => (
             <SidebarMenuItem key={page.url}>
               <SidebarMenuButton
-                asChild
+                render={<Link href={page.url} />}
                 className={MENU_BUTTON_CLS}
                 isActive={page.url === pathname}
               >
-                <Link href={page.url}>
-                  <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
-                  {page.name}
-                </Link>
+                <span className="absolute inset-0 flex w-(--sidebar-menu-width) bg-transparent" />
+                {page.name}
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}

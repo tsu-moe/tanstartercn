@@ -1,5 +1,4 @@
-import { Slot } from "radix-ui";
-import * as React from "react";
+import { Button as ButtonPrimitive } from "@base-ui/react/button";
 
 import { cn } from "@/lib/utils";
 
@@ -56,21 +55,28 @@ function Button({
   className,
   variant = "default",
   size = "default",
-  asChild = false,
   ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean;
+}: ButtonPrimitive.Props & {
   size?: ButtonSize;
   variant?: ButtonVariant;
 }) {
-  const Comp = asChild ? Slot.Root : "button";
-
   return (
-    <Comp
+    <ButtonPrimitive
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={
+        typeof className === "function"
+          ? (state) =>
+              cn(
+                buttonVariants({
+                  variant,
+                  size,
+                  className: className(state),
+                })
+              )
+          : cn(buttonVariants({ variant, size, className }))
+      }
       {...props}
     />
   );

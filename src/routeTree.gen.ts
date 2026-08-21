@@ -9,33 +9,23 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as OgRouteImport } from './routes/og'
-import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
-import { Route as DocsRouteImport } from './routes/docs'
-import { Route as BlocksRouteImport } from './routes/blocks'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as BlocksRouteImport } from './routes/blocks'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as LlmsDottxtRouteImport } from './routes/llms[.]txt'
+import { Route as OgRouteImport } from './routes/og'
 import { Route as BlocksIndexRouteImport } from './routes/blocks.index'
-import { Route as DocsSplatRouteImport } from './routes/docs.$'
 import { Route as BlocksBlockRouteImport } from './routes/blocks.$block'
+import { Route as DocsIndexRouteImport } from './routes/docs.index'
+import { Route as DocsSplatRouteImport } from './routes/docs.$'
 import { Route as BlocksBlockIndexRouteImport } from './routes/blocks.$block.index'
-import { Route as ViewStyleNameNameRouteImport } from './routes/view.$styleName.$name'
-import { Route as OgDocsSplatRouteImport } from './routes/og.docs.$'
 import { Route as BlocksBlockPreviewRouteImport } from './routes/blocks.$block.preview'
+import { Route as OgDocsSplatRouteImport } from './routes/og.docs.$'
+import { Route as ViewStyleNameNameRouteImport } from './routes/view.$styleName.$name'
 
-const OgRoute = OgRouteImport.update({
-  id: '/og',
-  path: '/og',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
-  id: '/llms.txt',
-  path: '/llms.txt',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DocsRoute = DocsRouteImport.update({
-  id: '/docs',
-  path: '/docs',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlocksRoute = BlocksRouteImport.update({
@@ -43,50 +33,60 @@ const BlocksRoute = BlocksRouteImport.update({
   path: '/blocks',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DocsIndexRoute = DocsIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => DocsRoute,
+const LlmsDottxtRoute = LlmsDottxtRouteImport.update({
+  id: '/llms.txt',
+  path: '/llms.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OgRoute = OgRouteImport.update({
+  id: '/og',
+  path: '/og',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BlocksIndexRoute = BlocksIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BlocksRoute,
 } as any)
-const DocsSplatRoute = DocsSplatRouteImport.update({
-  id: '/$',
-  path: '/$',
-  getParentRoute: () => DocsRoute,
-} as any)
 const BlocksBlockRoute = BlocksBlockRouteImport.update({
   id: '/$block',
   path: '/$block',
   getParentRoute: () => BlocksRoute,
+} as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsSplatRoute = DocsSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => DocsRoute,
 } as any)
 const BlocksBlockIndexRoute = BlocksBlockIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => BlocksBlockRoute,
 } as any)
-const ViewStyleNameNameRoute = ViewStyleNameNameRouteImport.update({
-  id: '/view/$styleName/$name',
-  path: '/view/$styleName/$name',
-  getParentRoute: () => rootRouteImport,
+const BlocksBlockPreviewRoute = BlocksBlockPreviewRouteImport.update({
+  id: '/preview',
+  path: '/preview',
+  getParentRoute: () => BlocksBlockRoute,
 } as any)
 const OgDocsSplatRoute = OgDocsSplatRouteImport.update({
   id: '/docs/$',
   path: '/docs/$',
   getParentRoute: () => OgRoute,
 } as any)
-const BlocksBlockPreviewRoute = BlocksBlockPreviewRouteImport.update({
-  id: '/preview',
-  path: '/preview',
-  getParentRoute: () => BlocksBlockRoute,
+const ViewStyleNameNameRoute = ViewStyleNameNameRouteImport.update({
+  id: '/view/$styleName/$name',
+  path: '/view/$styleName/$name',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -188,25 +188,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/og': {
-      id: '/og'
-      path: '/og'
-      fullPath: '/og'
-      preLoaderRoute: typeof OgRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/llms.txt': {
-      id: '/llms.txt'
-      path: '/llms.txt'
-      fullPath: '/llms.txt'
-      preLoaderRoute: typeof LlmsDottxtRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/docs': {
-      id: '/docs'
-      path: '/docs'
-      fullPath: '/docs'
-      preLoaderRoute: typeof DocsRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blocks': {
@@ -216,19 +202,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlocksRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/docs/': {
-      id: '/docs/'
-      path: '/'
-      fullPath: '/docs/'
-      preLoaderRoute: typeof DocsIndexRouteImport
-      parentRoute: typeof DocsRoute
+    '/llms.txt': {
+      id: '/llms.txt'
+      path: '/llms.txt'
+      fullPath: '/llms.txt'
+      preLoaderRoute: typeof LlmsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/og': {
+      id: '/og'
+      path: '/og'
+      fullPath: '/og'
+      preLoaderRoute: typeof OgRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/blocks/': {
       id: '/blocks/'
@@ -237,19 +230,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlocksIndexRouteImport
       parentRoute: typeof BlocksRoute
     }
-    '/docs/$': {
-      id: '/docs/$'
-      path: '/$'
-      fullPath: '/docs/$'
-      preLoaderRoute: typeof DocsSplatRouteImport
-      parentRoute: typeof DocsRoute
-    }
     '/blocks/$block': {
       id: '/blocks/$block'
       path: '/$block'
       fullPath: '/blocks/$block'
       preLoaderRoute: typeof BlocksBlockRouteImport
       parentRoute: typeof BlocksRoute
+    }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/$': {
+      id: '/docs/$'
+      path: '/$'
+      fullPath: '/docs/$'
+      preLoaderRoute: typeof DocsSplatRouteImport
+      parentRoute: typeof DocsRoute
     }
     '/blocks/$block/': {
       id: '/blocks/$block/'
@@ -258,12 +258,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlocksBlockIndexRouteImport
       parentRoute: typeof BlocksBlockRoute
     }
-    '/view/$styleName/$name': {
-      id: '/view/$styleName/$name'
-      path: '/view/$styleName/$name'
-      fullPath: '/view/$styleName/$name'
-      preLoaderRoute: typeof ViewStyleNameNameRouteImport
-      parentRoute: typeof rootRouteImport
+    '/blocks/$block/preview': {
+      id: '/blocks/$block/preview'
+      path: '/preview'
+      fullPath: '/blocks/$block/preview'
+      preLoaderRoute: typeof BlocksBlockPreviewRouteImport
+      parentRoute: typeof BlocksBlockRoute
     }
     '/og/docs/$': {
       id: '/og/docs/$'
@@ -272,12 +272,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OgDocsSplatRouteImport
       parentRoute: typeof OgRoute
     }
-    '/blocks/$block/preview': {
-      id: '/blocks/$block/preview'
-      path: '/preview'
-      fullPath: '/blocks/$block/preview'
-      preLoaderRoute: typeof BlocksBlockPreviewRouteImport
-      parentRoute: typeof BlocksBlockRoute
+    '/view/$styleName/$name': {
+      id: '/view/$styleName/$name'
+      path: '/view/$styleName/$name'
+      fullPath: '/view/$styleName/$name'
+      preLoaderRoute: typeof ViewStyleNameNameRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }

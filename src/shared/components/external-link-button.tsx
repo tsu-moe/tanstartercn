@@ -12,9 +12,14 @@ export const ExternalLinkButton = ({
   children,
   ...props
 }: ExternalLinkButtonProps) => (
-  <Button asChild {...props}>
-    <a href={href} target="_blank" rel="noopener noreferrer">
-      {children}
-    </a>
+  <Button
+    render={(renderProps) => (
+      <a {...renderProps} href={href} target="_blank" rel="noopener noreferrer">
+        {renderProps.children}
+      </a>
+    )}
+    {...props}
+  >
+    {children}
   </Button>
 );

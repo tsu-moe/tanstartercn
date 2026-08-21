@@ -120,7 +120,7 @@ export const RegistryAddButton = ({
     <>
       {isMobile ? (
         <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerTrigger asChild>{trigger}</DrawerTrigger>
+          <DrawerTrigger render={trigger} />
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>{title}</DrawerTitle>
@@ -138,15 +138,13 @@ export const RegistryAddButton = ({
               />
             </div>
             <DrawerFooter>
-              <DrawerClose asChild>
-                <Button size="sm">Done</Button>
-              </DrawerClose>
+              <DrawerClose render={<Button size="sm" />}>Done</DrawerClose>
             </DrawerFooter>
           </DrawerContent>
         </Drawer>
       ) : (
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
-          <DialogTrigger asChild>{trigger}</DialogTrigger>
+          <DialogTrigger render={trigger} />
           <DialogContent className="sm:max-w-lg">
             <DialogHeader>
               <DialogTitle>{title}</DialogTitle>
@@ -162,9 +160,7 @@ export const RegistryAddButton = ({
               copyEvent="copy_registry_command"
             />
             <DialogFooter>
-              <DialogClose asChild>
-                <Button size="sm">Done</Button>
-              </DialogClose>
+              <DialogClose render={<Button size="sm" />}>Done</DialogClose>
             </DialogFooter>
           </DialogContent>
         </Dialog>

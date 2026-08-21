@@ -60,17 +60,21 @@ export function BlockInstallButton({ name }: { name: string }) {
       </CopyButton>
       <DropdownMenu>
         <Tooltip>
-          <TooltipTrigger asChild>
-            <DropdownMenuTrigger asChild>
-              <Button
-                className="h-8 rounded-none border-y-0 border-r-0 px-2.5 shadow-none"
-                size="icon-sm"
-                variant="outline"
-              >
-                {getIconForPackageManager(packageManager)}
-                <span className="sr-only">Select package manager</span>
-              </Button>
-            </DropdownMenuTrigger>
+          <TooltipTrigger
+            render={
+              <DropdownMenuTrigger
+                render={
+                  <Button
+                    className="h-8 rounded-none border-y-0 border-r-0 px-2.5 shadow-none"
+                    size="icon-sm"
+                    variant="outline"
+                  />
+                }
+              />
+            }
+          >
+            {getIconForPackageManager(packageManager)}
+            <span className="sr-only">Select package manager</span>
           </TooltipTrigger>
           <TooltipContent>Select package manager</TooltipContent>
         </Tooltip>

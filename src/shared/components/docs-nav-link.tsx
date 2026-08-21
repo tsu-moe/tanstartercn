@@ -43,26 +43,24 @@ export const DocsNavLink = ({
 
   const link = (
     <Button
+      render={<Link href={href} />}
       variant="secondary"
       size={size}
       className={cn("shadow-none", className)}
-      asChild
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       {...props}
     >
-      <Link href={href}>
-        {navDirection === "back" && <ArrowLeftIcon ref={iconRef} />}
-        {children}
-        {navDirection === "forward" && <ArrowRightIcon ref={iconRef} />}
-      </Link>
+      {navDirection === "back" && <ArrowLeftIcon ref={iconRef} />}
+      {children}
+      {navDirection === "forward" && <ArrowRightIcon ref={iconRef} />}
     </Button>
   );
 
   if (tooltip) {
     return (
       <Tooltip>
-        <TooltipTrigger asChild>{link}</TooltipTrigger>
+        <TooltipTrigger render={link} />
         <TooltipContent className="pr-2 pl-3">
           <div className="flex items-center gap-3">
             {tooltip.title}

@@ -37,11 +37,9 @@ export const DefaultErrorPage = ({
           home.
         </p>
         <div className="mt-8 flex flex-wrap justify-center gap-2">
-          <Button asChild>
-            <Link to="/">
-              <Home />
-              Go home
-            </Link>
+          <Button render={<Link to="/" />}>
+            <Home />
+            Go home
           </Button>
           <Button variant="outline" onClick={reset}>
             <RefreshCw />

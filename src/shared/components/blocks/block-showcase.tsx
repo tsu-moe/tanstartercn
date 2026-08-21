@@ -212,17 +212,19 @@ export function BlockShowcase({
             <div className="hidden items-center gap-1 md:flex">
               {screens.map(({ name, label, icon: Icon }) => (
                 <Tooltip key={name}>
-                  <TooltipTrigger asChild>
-                    <Button
-                      type="button"
-                      className="size-6"
-                      size="icon-sm"
-                      variant={name === screenSize ? "secondary" : "ghost"}
-                      onClick={() => setScreenSize(name)}
-                    >
-                      <Icon />
-                      <span className="sr-only">{label}</span>
-                    </Button>
+                  <TooltipTrigger
+                    render={
+                      <Button
+                        type="button"
+                        className="size-6"
+                        size="icon-sm"
+                        variant={name === screenSize ? "secondary" : "ghost"}
+                        onClick={() => setScreenSize(name)}
+                      />
+                    }
+                  >
+                    <Icon />
+                    <span className="sr-only">{label}</span>
                   </TooltipTrigger>
                   <TooltipContent>{label}</TooltipContent>
                 </Tooltip>
@@ -230,38 +232,45 @@ export function BlockShowcase({
             </div>
             <div className="hidden h-5 w-px bg-border md:block" />
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  asChild
-                  className="size-6"
-                  size="icon-sm"
-                  variant="ghost"
-                >
-                  <a
-                    href={`/blocks/${block.name}/preview`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <ExpandIcon />
-                    <span className="sr-only">Open in New Tab</span>
-                  </a>
-                </Button>
+              <TooltipTrigger
+                render={
+                  <Button
+                    render={(props) => (
+                      <a
+                        {...props}
+                        href={`/blocks/${block.name}/preview`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {props.children}
+                      </a>
+                    )}
+                    className="size-6"
+                    size="icon-sm"
+                    variant="ghost"
+                  />
+                }
+              >
+                <ExpandIcon />
+                <span className="sr-only">Open in New Tab</span>
               </TooltipTrigger>
               <TooltipContent>Open in New Tab</TooltipContent>
             </Tooltip>
             <div className="h-5 w-px bg-border" />
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  type="button"
-                  className="size-6"
-                  size="icon-sm"
-                  variant="ghost"
-                  onClick={reloadPreview}
-                >
-                  <RotateCwIcon />
-                  <span className="sr-only">Reload Preview</span>
-                </Button>
+              <TooltipTrigger
+                render={
+                  <Button
+                    type="button"
+                    className="size-6"
+                    size="icon-sm"
+                    variant="ghost"
+                    onClick={reloadPreview}
+                  />
+                }
+              >
+                <RotateCwIcon />
+                <span className="sr-only">Reload Preview</span>
               </TooltipTrigger>
               <TooltipContent>Reload Preview</TooltipContent>
             </Tooltip>

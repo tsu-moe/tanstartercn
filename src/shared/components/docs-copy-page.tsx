@@ -32,7 +32,7 @@ Help me understand how to use it. Be ready to explain concepts, give examples, o
 `
   )}`;
 
-const MENU_ITEMS: [string, (url: string) => React.ReactNode][] = [
+const MENU_ITEMS: [string, (url: string) => React.ReactElement][] = [
   [
     "markdown",
     (url) => (
@@ -183,16 +183,14 @@ export const DocsCopyPage = ({
         Copy Markdown
       </CopyButton>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>{menuTrigger}</DropdownMenuTrigger>
+        <DropdownMenuTrigger render={menuTrigger} />
         <DropdownMenuContent
           align="end"
           collisionPadding={8}
           className="animate-none! rounded-lg shadow-none"
         >
           {MENU_ITEMS.map(([key, render]) => (
-            <DropdownMenuItem key={key} asChild>
-              {render(url)}
-            </DropdownMenuItem>
+            <DropdownMenuItem key={key} render={render(url)} />
           ))}
         </DropdownMenuContent>
       </DropdownMenu>

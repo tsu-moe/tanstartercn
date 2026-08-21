@@ -47,6 +47,16 @@ import { cn } from "@/shared/lib/utils";
 const INITIAL_BLOCK_COUNT = 5;
 const BLOCKS_PER_LOAD = 5;
 
+type CategoryCommandItem = {
+  value: string;
+  label: string;
+};
+
+type CategoryCommandGroup = {
+  value: string;
+  items: CategoryCommandItem[];
+};
+
 const getCategoryHref = (category: string) =>
   `/blocks?category=${encodeURIComponent(category)}`;
 
@@ -173,6 +183,18 @@ function CategoryFilter({
   const options = useMemo(() => [allBlockCategory, ...blockCategories], []);
   const selected =
     options.find((option) => option.name === category) ?? allBlockCategory;
+  const commandGroups = useMemo<CategoryCommandGroup[]>(
+    () => [
+      {
+        value: "Categories",
+        items: options.map((option) => ({
+          value: option.name,
+          label: option.title,
+        })),
+      },
+    ],
+    [options]
+  );
 
   const handleSelect = (value: string) => {
     const nextQuery = query.trim();
@@ -188,43 +210,57 @@ function CategoryFilter({
 
   return (
     <Popover onOpenChange={setOpen} open={open}>
-      <PopoverTrigger asChild>
-        <Button
-          aria-expanded={open}
-          className="w-44 justify-between bg-background"
-          variant="outline"
-        >
-          <span className="flex min-w-0 items-center gap-2">
-            <TagIcon className="size-4 shrink-0" />
-            <span className="truncate">{selected.title}</span>
-          </span>
-          <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger
+        render={
+          <Button
+            aria-expanded={open}
+            className="w-44 justify-between bg-background"
+            variant="outline"
+          >
+            <span className="flex min-w-0 items-center gap-2">
+              <TagIcon className="size-4 shrink-0" />
+              <span className="truncate">{selected.title}</span>
+            </span>
+            <ChevronsUpDownIcon className="ml-2 size-4 shrink-0 opacity-50" />
+          </Button>
+        }
+      />
       <PopoverContent align="start" className="p-0">
-        <Command>
+        <Command items={commandGroups}>
           <CommandInput placeholder="Search category..." />
-          <CommandList className="max-h-96">
+          <CommandList
+            className="max-h-96"
+            renderItem={(value) => {
+              const group = value as unknown as CategoryCommandGroup;
+              return (
+                <CommandGroup
+                  key={group.value}
+                  items={group.items}
+                  renderItem={(itemValue) => {
+                    const option = itemValue as unknown as CategoryCommandItem;
+                    return (
+                      <CommandItem
+                        key={option.value}
+                        onSelect={() => handleSelect(option.value)}
+                        value={option}
+                      >
+                        <CheckIcon
+                          className={cn(
+                            "mr-2 size-4",
+                            selected.name === option.value
+                              ? "opacity-100"
+                              : "opacity-0"
+                          )}
+                        />
+                        {option.label}
+                      </CommandItem>
+                    );
+                  }}
+                />
+              );
+            }}
+          >
             <CommandEmpty>No category found.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option.name}
-                  onSelect={() => handleSelect(option.name)}
-                  value={option.title}
-                >
-                  <CheckIcon
-                    className={cn(
-                      "mr-2 size-4",
-                      selected.name === option.name
-                        ? "opacity-100"
-                        : "opacity-0"
-                    )}
-                  />
-                  {option.title}
-                </CommandItem>
-              ))}
-            </CommandGroup>
           </CommandList>
         </Command>
       </PopoverContent>
