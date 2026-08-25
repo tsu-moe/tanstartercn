@@ -34,13 +34,13 @@ const registrySources = import.meta.glob("../../registry/**/*.tsx", {
   query: "?raw",
 }) as Record<string, string>;
 
-const exampleSources = import.meta.glob("../../../examples/*.tsx", {
+const exampleSources = import.meta.glob("../../../examples/**/*.tsx", {
   eager: true,
   import: "default",
   query: "?raw",
 }) as Record<string, string>;
 
-const exampleModules = import.meta.glob("../../../examples/*.tsx", {
+const exampleModules = import.meta.glob("../../../examples/**/*.tsx", {
   eager: true,
 }) as Record<string, DemoModule>;
 
@@ -48,8 +48,7 @@ const normalizePath = (value: string) => value.replaceAll("\\", "/");
 
 const toDemoName = (filePath: string) =>
   normalizePath(filePath)
-    .split("/")
-    .at(-1)
+    .replace(/^.*\/examples\//, "")
     ?.replace(/\.tsx$/, "");
 
 const toRootPath = (filePath: string) =>
