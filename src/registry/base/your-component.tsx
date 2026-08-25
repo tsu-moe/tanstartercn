@@ -26,7 +26,7 @@ const YourComponent = forwardRef<HTMLDivElement, YourComponentProps>(
       <p className="text-muted-foreground text-center text-xs">
         Edit{" "}
         <code className="bg-muted rounded px-1.5 py-0.5 text-xs">
-          src/registry/luma/your-component.tsx
+          src/registry/base/your-component.tsx
         </code>{" "}
         to get started
       </p>

@@ -13,7 +13,7 @@ The app is a static-hostable TanStack Start SPA deployed to Cloudflare Workers w
 - **Fumadocs documentation** in `content/docs`, discovered from the filesystem.
 - **shadcn registry output** generated from `registry.json` into `public/r`.
 - **Live component previews** that can render examples from `examples` or inline MDX.
-- **A default `luma` registry style** for new components, plus the current placeholder item.
+- **A single `base` registry namespace** for new components, plus the current placeholder item.
 - **Static AI documentation endpoints** such as `/llms.txt`, `/llms-full.txt`, and `/llms.md/...`.
 - **Cloudflare Workers deployment** using Worker Static Assets.
 
@@ -32,7 +32,7 @@ The app is a static-hostable TanStack Start SPA deployed to Cloudflare Workers w
 
 ## How It Works
 
-1. Add or edit registry source in `src/registry/luma`.
+1. Add or edit registry source in `src/registry/base`.
 2. Add the registry item to `registry.json`.
 3. Document the component in `content/docs/components`.
 4. Render a preview with `ComponentPreview`.
@@ -49,7 +49,7 @@ npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 
 - `content/docs` - MDX documentation pages.
 - `examples` - reusable preview examples.
-- `src/registry/luma` - installable registry component source.
+- `src/registry/base` - installable registry component source.
 - `src/shared/components` - app and docs UI.
 - `src/shared/components/ui` - complete shadcn/ui primitives used by the site.
 - `src/shared/lib/registry.ts` - preview/component lookup wiring.

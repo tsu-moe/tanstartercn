@@ -81,7 +81,7 @@ pnpm deploy
 Put installable component source under the default style folder:
 
 ```txt
-src/registry/luma/my-component.tsx
+src/registry/base/my-component.tsx
 ```
 
 Use shadcn-compatible imports in registry source. Installed code should import from paths that exist in a user's app, such as `@/lib/utils` and `@/components/ui/button`.
@@ -96,7 +96,7 @@ Add the item to `registry.json`:
   "description": "A concise description of what it provides.",
   "files": [
     {
-      "path": "src/registry/luma/my-component.tsx",
+      "path": "src/registry/base/my-component.tsx",
       "type": "registry:ui",
       "target": "components/ui/my-component.tsx"
     }
@@ -128,7 +128,7 @@ npx shadcn@latest add https://tanstartercn.tsu.moe/r/button.json
 ```
 ├── src/
 │   ├── registry/
-│   │   └── luma/           # Registry component source
+│   │   └── base/           # Registry component source
 │   │       └── button.tsx
 │   ├── routes/             # TanStack Start routes
 │   ├── shared/             # Shared components, hooks, lib, constants, SEO

@@ -9,7 +9,7 @@
       "description": "A placeholder component. Replace this with your custom shadcn component.",
       "files": [
         {
-          "path": "src/registry/luma/your-component.tsx",
+          "path": "src/registry/base/your-component.tsx",
           "type": "registry:ui",
           "target": "components/ui/your-component.tsx"
         }
@@ -19,11 +19,11 @@
       "name": "button",
       "type": "registry:ui",
       "title": "Button",
-      "description": "A Luma-styled button component with variants and sizes.",
+      "description": "A Base UI button component with variants and sizes.",
       "dependencies": ["@base-ui/react"],
       "files": [
         {
-          "path": "src/registry/luma/button.tsx",
+          "path": "src/registry/base/button.tsx",
           "type": "registry:ui",
           "target": "components/ui/button.tsx"
         }
@@ -51,22 +51,22 @@
       "categories": ["sidebar"],
       "files": [
         {
-          "path": "src/registry/luma/sidebar-01/page.tsx",
+          "path": "src/registry/base/sidebar-01/page.tsx",
           "type": "registry:page",
           "target": "app/dashboard/page.tsx"
         },
         {
-          "path": "src/registry/luma/sidebar-01/components/app-sidebar.tsx",
+          "path": "src/registry/base/sidebar-01/components/app-sidebar.tsx",
           "type": "registry:component",
           "target": "components/app-sidebar.tsx"
         },
         {
-          "path": "src/registry/luma/sidebar-01/components/search-form.tsx",
+          "path": "src/registry/base/sidebar-01/components/search-form.tsx",
           "type": "registry:component",
           "target": "components/search-form.tsx"
         },
         {
-          "path": "src/registry/luma/sidebar-01/components/version-switcher.tsx",
+          "path": "src/registry/base/sidebar-01/components/version-switcher.tsx",
           "type": "registry:component",
           "target": "components/version-switcher.tsx"
         }

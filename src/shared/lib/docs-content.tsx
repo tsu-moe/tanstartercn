@@ -61,7 +61,6 @@ const getSourceProps = ({
   maxLines,
   name,
   src,
-  styleName,
   title,
 }: ComponentSourceProps): ComponentSourceProps => ({
   code,
@@ -69,7 +68,6 @@ const getSourceProps = ({
   maxLines,
   name,
   src,
-  styleName,
   title,
 });
 
@@ -103,7 +101,6 @@ export const preloadDocsComponentSources = async (doc: MdxDoc) => {
           ...props,
           code: props.code ?? inlineSource?.code,
           language: props.language ?? inlineSource?.language,
-          styleName: props.styleName ?? "luma",
         });
 
         pending.push(preloadComponentSource(sourceProps));

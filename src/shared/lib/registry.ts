@@ -1,8 +1,8 @@
 import type { ComponentType } from "react";
 
-import { Button as LumaButton } from "@/registry/luma/button";
-import Sidebar01Page from "@/registry/luma/sidebar-01/page";
-import { YourComponent } from "@/registry/luma/your-component";
+import { Button as BaseButton } from "@/registry/base/button";
+import Sidebar01Page from "@/registry/base/sidebar-01/page";
+import { YourComponent } from "@/registry/base/your-component";
 
 import registryManifest from "../../../registry.json";
 
@@ -24,8 +24,6 @@ type RegistryItem = {
 
 type RegistryComponent = ComponentType<Record<string, never>>;
 
-type RegistryComponentMap = Record<string, Record<string, RegistryComponent>>;
-type RegistryItemMap = Record<string, Record<string, RegistryItem>>;
 type DemoModule = {
   default?: RegistryComponent;
 };
@@ -65,36 +63,16 @@ const sourceByRootPath = new Map<string, string>(
   )
 );
 
-const inferStyleName = (item: RegistryItem) => {
-  const firstPath = item.files?.[0]?.path ?? "";
-  const match = firstPath.match(/src\/registry\/([^/]+)\//);
-
-  return match?.[1] ?? "luma";
-};
-
 const manifestItems = registryManifest.items as RegistryItem[];
 
 const allRegistryItems = Object.fromEntries(
   manifestItems.map((item) => [item.name, item])
 ) as Record<string, RegistryItem>;
 
-const registryItemsByStyle = manifestItems.reduce<RegistryItemMap>(
-  (acc, item) => {
-    const styleName = inferStyleName(item);
-    acc[styleName] ??= {};
-    acc[styleName][item.name] = item;
-
-    return acc;
-  },
-  {}
-);
-
-const registryComponents: RegistryComponentMap = {
-  luma: {
-    button: LumaButton as RegistryComponent,
-    "sidebar-01": Sidebar01Page as RegistryComponent,
-    "your-component": YourComponent as RegistryComponent,
-  },
+const registryComponents: Record<string, RegistryComponent> = {
+  button: BaseButton as RegistryComponent,
+  "sidebar-01": Sidebar01Page as RegistryComponent,
+  "your-component": YourComponent as RegistryComponent,
 };
 
 const demoComponentsByName = Object.fromEntries(
@@ -104,36 +82,6 @@ const demoComponentsByName = Object.fromEntries(
     return name && mod.default ? [[name, mod.default]] : [];
   })
 ) as Record<string, RegistryComponent>;
-
-const demoComponents: RegistryComponentMap = {
-  default: demoComponentsByName,
-  luma: demoComponentsByName,
-};
-
-const normalizeStyleName = (styleName = "luma") =>
-  styleName.replace(/-v4$/, "");
-
-const styleCandidates = (styleName: string) => {
-  const normalized = normalizeStyleName(styleName);
-
-  return Array.from(new Set([styleName, normalized, "default"]));
-};
-
-const pickFromStyleMap = <T>(
-  map: Record<string, Record<string, T>>,
-  name: string,
-  styleName: string
-) => {
-  for (const candidate of styleCandidates(styleName)) {
-    const value = map[candidate]?.[name];
-
-    if (value) {
-      return value;
-    }
-  }
-
-  return undefined;
-};
 
 const withFileContent = (item: RegistryItem): RegistryItem => ({
   ...item,
@@ -149,14 +97,12 @@ export const readOptionalFromRoot = async (
   return sourceByRootPath.get(normalizePath(relativePath)) ?? null;
 };
 
-const getDemoComponent = (name: string, styleName = "luma") =>
-  pickFromStyleMap(demoComponents, name, styleName) ?? null;
+const getDemoComponent = (name: string) => demoComponentsByName[name] ?? null;
 
 export const getDemoItem = async (
-  name: string,
-  styleName = "luma"
+  name: string
 ): Promise<RegistryItem | null> => {
-  const demo = getDemoComponent(name, styleName);
+  const demo = getDemoComponent(name);
 
   if (!demo) {
     return null;
@@ -177,29 +123,20 @@ export const getDemoItem = async (
   };
 };
 
-export const getRegistryComponent = (name: string, styleName = "luma") => {
-  const demo = getDemoComponent(name, styleName);
+export const getRegistryComponent = (name: string) => {
+  const demo = getDemoComponent(name);
 
   if (demo) {
     return demo;
   }
 
-  return (
-    pickFromStyleMap(registryComponents, name, styleName) ??
-    Object.values(registryComponents)
-      .map((items) => items[name])
-      .find(Boolean) ??
-    null
-  );
+  return registryComponents[name] ?? null;
 };
 
 export const getRegistryItem = async (
-  name: string,
-  styleName = "luma"
+  name: string
 ): Promise<RegistryItem | null> => {
-  const item =
-    pickFromStyleMap(registryItemsByStyle, name, styleName) ??
-    allRegistryItems[name];
+  const item = allRegistryItems[name];
 
   return item ? withFileContent(item) : null;
 };

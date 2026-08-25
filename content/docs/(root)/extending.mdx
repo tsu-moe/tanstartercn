@@ -34,10 +34,10 @@ Use `meta.json` only as an optional override for folder metadata or custom order
 
 ## Add a registry component
 
-Put installable source under the style folder. The default style is `luma`.
+Put installable source under the single `base` registry folder.
 
 ```txt
-src/registry/luma/my-component.tsx
+src/registry/base/my-component.tsx
 ```
 
 Use shadcn-compatible imports in registry source. The installed code should import from paths that exist in a user's app, such as `@/lib/utils` and `@/components/ui/button`. If you need an upstream shadcn/ui primitive first, add it with:
@@ -57,7 +57,7 @@ Add the component to `registry.json`:
   "dependencies": ["@base-ui/react"],
   "files": [
     {
-      "path": "src/registry/luma/my-component.tsx",
+      "path": "src/registry/base/my-component.tsx",
       "type": "registry:ui",
       "target": "components/ui/my-component.tsx"
     }
@@ -70,12 +70,10 @@ Use `dependencies` for npm packages the installed component needs. Use the file 
 Then wire the preview in `src/shared/lib/registry.ts`:
 
 ```tsx
-import { MyComponent } from "@/registry/luma/my-component";
+import { MyComponent } from "@/registry/base/my-component";
 
-const registryComponents: RegistryComponentMap = {
-  luma: {
-    "my-component": MyComponent as RegistryComponent,
-  },
+const registryComponents: Record<string, RegistryComponent> = {
+  "my-component": MyComponent as RegistryComponent,
 };
 ```
 
@@ -85,11 +83,11 @@ Do not edit `public/r/*` by hand. Run `pnpm registry:build` after registry chang
 
 Blocks are larger installable examples, such as full pages, dashboard shells, auth screens, or composed sections. They appear in the `/blocks` browser when an item in `registry.json` uses `type: "registry:block"`.
 
-Put block source under a named folder in the registry style:
+Put block source under a named folder in the `base` registry:
 
 ```txt
-src/registry/luma/my-block/page.tsx
-src/registry/luma/my-block/components/my-block-sidebar.tsx
+src/registry/base/my-block/page.tsx
+src/registry/base/my-block/components/my-block-sidebar.tsx
 ```
 
 Use install-friendly imports inside block source, just like registry components. For example, a block should import primitives from `@/components/ui/button`, not from this site's `src/shared` paths. If the block needs upstream shadcn/ui primitives, add them first:
@@ -110,12 +108,12 @@ Then add the block to `registry.json`:
   "categories": ["dashboard"],
   "files": [
     {
-      "path": "src/registry/luma/my-block/page.tsx",
+      "path": "src/registry/base/my-block/page.tsx",
       "type": "registry:page",
       "target": "app/dashboard/page.tsx"
     },
     {
-      "path": "src/registry/luma/my-block/components/my-block-sidebar.tsx",
+      "path": "src/registry/base/my-block/components/my-block-sidebar.tsx",
       "type": "registry:component",
       "target": "components/my-block-sidebar.tsx"
     }
@@ -128,12 +126,10 @@ Use `registryDependencies` for shadcn registry items the block needs, such as `b
 Wire the live preview in `src/shared/lib/registry.ts`:
 
 ```tsx
-import MyBlockPage from "@/registry/luma/my-block/page";
+import MyBlockPage from "@/registry/base/my-block/page";
 
-const registryComponents: RegistryComponentMap = {
-  luma: {
-    "my-block": MyBlockPage as RegistryComponent,
-  },
+const registryComponents: Record<string, RegistryComponent> = {
+  "my-block": MyBlockPage as RegistryComponent,
 };
 ```
 
@@ -181,7 +177,7 @@ The block browser is split across a few files:
 - `src/shared/components/blocks/block-showcase.tsx` owns the preview/code tabs, responsive preview controls, reload button, fullscreen link, and copy command.
 - `src/shared/components/blocks/block-code-explorer.tsx` reads the files listed in `registry.json` and shows the code browser.
 
-Most new blocks only require three edits: add files under `src/registry/luma`, add the block item to `registry.json`, and register the preview in `src/shared/lib/registry.ts`. Add category titles or category art only when the defaults are not enough.
+Most new blocks only require three edits: add files under `src/registry/base`, add the block item to `registry.json`, and register the preview in `src/shared/lib/registry.ts`. Add category titles or category art only when the defaults are not enough.
 
 ## Write component docs
 
@@ -227,7 +223,7 @@ examples/my-component-demo.tsx
 ```
 
 ```tsx
-import { MyComponent } from "@/registry/luma/my-component";
+import { MyComponent } from "@/registry/base/my-component";
 
 export default function MyComponentDemo() {
   return <MyComponent>Save changes</MyComponent>;
@@ -249,7 +245,7 @@ If the demo is reused by multiple pages, import it in `src/shared/lib/registry.t
 Use inline previews when the example only belongs to one docs page.
 
 ````mdx
-import { Button } from "@/registry/luma/button";
+import { Button } from "@/registry/base/button";
 
 <ComponentPreview name="inline-button-example" title="inline-button-example.tsx">
   <Button variant="outline">Inline example</Button>
@@ -273,7 +269,7 @@ Use `ComponentSource` when the page needs to show the registry file itself.
 
 ```mdx
 <ComponentSource
-  src="src/registry/luma/button.tsx"
+  src="src/registry/base/button.tsx"
   title="components/ui/button.tsx"
 />
 ```

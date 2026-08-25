@@ -8,7 +8,7 @@ Style registry components with Tailwind CSS v4 and shadcn tokens.
 
 Registry components are styled with Tailwind CSS v4 utility classes and shadcn-compatible CSS variables. The installed source expects your app to provide the standard theme tokens such as `background`, `foreground`, `primary`, `border`, `input`, `ring`, and `radius`.
 
-The default registry style is `luma`. It keeps component source portable by using semantic utilities like `bg-primary`, `text-primary-foreground`, `border-input`, and radius tokens instead of hard-coded one-off colors.
+The registry uses one `base` source namespace. It keeps component source portable by using semantic utilities like `bg-primary`, `text-primary-foreground`, `border-input`, and radius tokens instead of hard-coded one-off colors.
 
 ## Prerequisites
 

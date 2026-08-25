@@ -3,13 +3,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { getRegistryComponent } from "@/shared/lib/registry";
 import { cn } from "@/shared/lib/utils";
 
-export const Route = createFileRoute("/view/$styleName/$name")({
+export const Route = createFileRoute("/view/$name")({
   component: RegistryViewRoute,
 });
 
 function RegistryViewRoute() {
-  const { styleName, name } = Route.useParams();
-  const Component = getRegistryComponent(name, styleName);
+  const { name } = Route.useParams();
+  const Component = getRegistryComponent(name);
 
   return (
     <main className="min-h-svh bg-background text-foreground">

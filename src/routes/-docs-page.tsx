@@ -338,7 +338,7 @@ export const DocsPage = ({ data }: { data: DocsPageData | undefined }) => {
                     </Link>
                   )}
                 </div>
-                <div className="mx-auto hidden h-16 w-full max-w-2xl items-center gap-2 px-4 sm:flex md:px-0">
+                <div className="mx-auto hidden w-full max-w-2xl pb-16 items-start gap-2 px-4 sm:flex md:px-0">
                   {neighbours.previous && (
                     <DocsNavLink
                       href={neighbours.previous.url}

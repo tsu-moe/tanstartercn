@@ -12,7 +12,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/registry/luma/sidebar-01/components/app-sidebar";
+import { AppSidebar } from "@/registry/base/sidebar-01/components/app-sidebar";
 
 export default function Sidebar01Page() {
   return (

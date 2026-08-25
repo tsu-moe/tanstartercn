@@ -8,7 +8,6 @@ import { cn } from "@/shared/lib/utils";
 
 type ComponentPreviewProps = React.ComponentProps<"div"> & {
   name: string;
-  styleName?: string;
   align?: "center" | "start" | "end";
   description?: string;
   hideCode?: boolean;
@@ -91,7 +90,6 @@ export function ComponentPreview({
   align = "center",
   hideCode = false,
   chromeLessOnMobile = false,
-  styleName = "luma",
   caption,
   src,
   code,
@@ -112,7 +110,7 @@ export function ComponentPreview({
       >
         <div className="absolute inset-0 bg-background">
           <iframe
-            src={`/view/${styleName}/${name}`}
+            src={`/view/${name}`}
             title={`${name} preview`}
             className="size-full"
           />
@@ -137,9 +135,7 @@ export function ComponentPreview({
   const { inlineSource, previewChildren } = splitPreviewChildren(children);
   const previewCode = code ?? inlineSource?.code;
   const previewLanguage = language ?? inlineSource?.language;
-  const RegistryComponent = previewChildren
-    ? null
-    : getRegistryComponent(name, styleName);
+  const RegistryComponent = previewChildren ? null : getRegistryComponent(name);
 
   if (!previewChildren && !RegistryComponent) {
     return <MissingComponent name={name} />;
@@ -163,7 +159,6 @@ export function ComponentPreview({
           language={previewLanguage}
           title={title}
           collapsible={false}
-          styleName={styleName}
           connected
         />
       }
@@ -175,7 +170,6 @@ export function ComponentPreview({
           language={previewLanguage}
           title={title}
           collapsible={false}
-          styleName={styleName}
           maxLines={3}
           connected
         />

@@ -164,7 +164,7 @@ export function BlockCodeExplorer({ block }: { block: RegistryBlock }) {
 
       try {
         const rawCode = await readOptionalFromRoot(activeFile.path);
-        const formattedCode = await formatCode(rawCode ?? "", "luma");
+        const formattedCode = await formatCode(rawCode ?? "");
         const highlightedCode = await highlightCode(
           formattedCode,
           getLanguage(activeFile.displayPath)

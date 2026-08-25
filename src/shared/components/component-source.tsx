@@ -20,7 +20,6 @@ export type ComponentSourceProps = {
   collapsible?: boolean;
   className?: string;
   language?: string;
-  styleName?: string;
   maxLines?: number;
   connected?: boolean;
 };
@@ -82,7 +81,6 @@ const loadComponentSource = async ({
   code: inlineCode,
   title,
   language,
-  styleName = "luma",
   maxLines,
 }: ComponentSourceProps): Promise<ComponentSourceData | null> => {
   let code: string | null = inlineCode ?? null;
@@ -92,9 +90,7 @@ const loadComponentSource = async ({
   }
 
   if (!code && name) {
-    const item =
-      (await getDemoItem(name, styleName)) ??
-      (await getRegistryItem(name, styleName));
+    const item = (await getDemoItem(name)) ?? (await getRegistryItem(name));
     code = item?.files?.[0]?.content ?? null;
   }
 
@@ -102,7 +98,7 @@ const loadComponentSource = async ({
     return null;
   }
 
-  code = await formatCode(code, styleName);
+  code = await formatCode(code);
   code = code.replaceAll("/* eslint-disable react/no-children-prop */\n", "");
 
   if (maxLines) {

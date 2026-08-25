@@ -1,6 +1,6 @@
 import { ArrowUpIcon } from "lucide-react";
 
-import { Button } from "@/registry/luma/button";
+import { Button } from "@/registry/base/button";
 
 export default function ButtonDemo() {
   return (
