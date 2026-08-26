@@ -29,7 +29,7 @@ export const SITE = {
     "npx shadcn add",
   ] as const,
   NAME: "tanstartercn",
-  OG_IMAGE: `${baseUrl}/og`,
+  OG_IMAGE: `${baseUrl}/og.png`,
   REGISTRY: baseUrl,
   TITLE: {
     LONG: "tanstartercn | The Open Source TanStack Start shadcn Registry Template",
