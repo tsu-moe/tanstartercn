@@ -305,13 +305,13 @@
     padding-right: calc(var(--spacing) * 6);
     text-align: right;
     color: var(--color-code-number);
-    background-color: transparent;
+    background-color: var(--color-code);
     position: sticky;
     left: 0;
   }
 
   [data-line-numbers] [data-highlighted-line][data-line]::before {
-    background-color: transparent;
+    background-color: var(--color-code);
   }
 
   [data-line] {
