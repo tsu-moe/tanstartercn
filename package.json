@@ -46,11 +46,11 @@
     "shiki": "catalog:",
     "sonner": "catalog:",
     "tailwind-merge": "catalog:",
-    "takumi-js": "^2.10.0",
+    "takumi-js": "^2.13.3",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@cloudflare/vite-plugin": "^1.53.1",
+    "@cloudflare/vite-plugin": "^1.54.2",
     "@tailwindcss/postcss": "catalog:",
     "@tanstack/router-plugin": "catalog:",
     "@types/mdx": "catalog:",
@@ -66,12 +66,12 @@
     "typescript": "catalog:",
     "vite": "catalog:",
     "vite-plus": "catalog:",
-    "wrangler": "^4.125.0"
+    "wrangler": "^4.127.1"
   },
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.22.0",
+      "version": "11.25.0",
       "onFail": "download"
     }
   }
